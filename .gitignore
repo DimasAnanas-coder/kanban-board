@@ -1,12 +1,10 @@
-
 # dependencies
 frontend/node_modules/
 
 frontend/design
 
-
-# testing
-/coverage
-
 # production
-/frontend/build
+/frontend/dist
+
+# secrets
+frontend/.env
