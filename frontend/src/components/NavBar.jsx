@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import NavButton from "./NavButton";
+import Logo from "./Logo";
+import { useLocation } from "react-router-dom";
 
 const links = [
   { name: 'Home', to: '/' },
@@ -6,19 +8,19 @@ const links = [
 ];
 
 function NavBar() {
+  const location = useLocation();
+  
   return (
-    <nav className="bg-gray-800 p-4">
+    <nav className="bg-primary p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-white text-2xl font-bold">Kanban Board</h1>
-        <div>
+        <Logo />
+        <div className="flex gap-2">
           {links.map(({ name, to }) => (
-            <Link
-              key={to}
-              to={to}
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
-              {name}
-            </Link>
+            <NavButton
+              name={ name } 
+              to={ to }
+              isActive={ location.pathname === to }
+            />
           ))}
         </div>
       </div>

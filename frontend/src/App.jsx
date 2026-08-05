@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <NavBar />
 
-      <div className="container mx-auto ">
+      <div className="container mx-auto bg-primary">
         <Routes>
           { routes.map(({ path, page }) => (
             <Route key={path} path={path} element={page} />
