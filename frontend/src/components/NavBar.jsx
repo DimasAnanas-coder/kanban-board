@@ -3,29 +3,29 @@ import Logo from "./Logo";
 import { useLocation } from "react-router-dom";
 
 const links = [
-  { name: 'Home', to: '/' },
-  { name: 'About', to: '/about' },
+    { name: 'Доска', to: '/board' },
+    { name: 'О нас', to: '/about' },
 ];
 
 function NavBar() {
-  const location = useLocation();
+    const location = useLocation();
   
-  return (
-    <nav className="bg-primary p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <Logo />
-        <div className="flex gap-2">
-          {links.map(({ name, to }) => (
-            <NavButton
-              name={ name } 
-              to={ to }
-              isActive={ location.pathname === to }
-            />
-          ))}
-        </div>
-      </div>
-    </nav>
-  );
+    return (
+        <nav className="bg-primary p-4">
+            <div className="flex justify-between items-center">
+                <Logo />
+                    <div className="flex gap-2">
+                          {links.map(({ name, to }) => (
+                              <NavButton
+                                  name={ name } 
+                                  to={ to }
+                                  isActive={ location.pathname === to }
+                              />
+                        ))}
+                </div>
+            </div>
+        </nav>
+    );
 }
 
 export default NavBar;
