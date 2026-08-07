@@ -13,8 +13,17 @@ export default function Column({ title, tasks }) {
             ref={setNodeRef}
             className="container bg-secondary rounded-md pb-4 h-fit ml-10 mr-10 min-w-[200px] max-w-[600px]"
         >
-            <div className='m-4'>
-                <h2 className="font-bold text-text mb-4">{title}</h2>
+            <div className='m-4 text-text'>
+                <div className="flex justify-between mb-4">
+                    <h2 className="font-bold">
+                        {title}
+                    </h2>
+                    
+                    <p className="text-xs rounded-full bg-thirdary px-2 py-1">
+                        {tasks.length} 
+                    </p>
+                </div>
+                
 
                 <SortableContext 
                     items={tasks.map(task => task.id)}
