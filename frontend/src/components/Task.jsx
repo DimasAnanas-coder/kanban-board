@@ -22,6 +22,7 @@ export default function Task({
 
     const movingStyle = isMoving ? "border-2 border-blue-500 opacity-90" : "";
     const cursorRuleStyle =  isMoving ? "cursor-grabbing" : "cursor-grab active:cursor-grabbing";
+    const shadowRuleStyle = "shadow-md hover:shadow-lg transition-shadow"
 
     return (
         <div 
@@ -29,7 +30,7 @@ export default function Task({
             style={style}
             {...attributes} 
             {...listeners}
-            className={`bg-thirdary rounded-md p-4 mb-4 shadow-md ${cursorRuleStyle} hover:shadow-lg transition-shadow ${movingStyle}`}
+            className={`bg-thirdary rounded-md p-4 mb-4 ${shadowRuleStyle} ${cursorRuleStyle} ${movingStyle}`}
         >   
             <div className='flex mb-2 justify-between text-text'>
                 <h3 className="font-bold">
