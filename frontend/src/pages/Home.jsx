@@ -1,4 +1,5 @@
 import AdvantageAppCard from "../components/AdvantageAppCard";
+import { PROJECT_NAME } from "../config";
 
 const ADVANTAGES = [
     {
@@ -29,7 +30,7 @@ function Home() {
                 
                 <h1 className="text-5xl font-extrabold text-text mb-4 tracking-tight">
                     🚀 Добро пожаловать в 
-                    <span className="text-accentText"> Kanban Board</span>
+                    <span className="text-accentText"> {PROJECT_NAME}</span>
                 </h1>
                 
                 <p className="text-xl text-text/80 mb-8 leading-relaxed">

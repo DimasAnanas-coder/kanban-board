@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
-const PROJECT_NAME = 'Kanban Board';
+import { PROJECT_NAME } from '../config';
 
 export default function Logo() {
     return (
