@@ -11,7 +11,7 @@ export default function Column({ title, tasks }) {
     return (
         <div 
             ref={setNodeRef}
-            className="container bg-secondary rounded-md pb-4 h-fit ml-10 mr-10 min-w-[200px] max-w-[600px]"
+            className="container bg-secondary rounded-md pb-4 h-fit min-w-[200px] max-w-[600px]"
         >
             <div className='m-4 text-text'>
                 <div className="flex justify-between mb-4">

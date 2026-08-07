@@ -7,13 +7,15 @@ import './index.css';
 function App() {
   return (
     <BrowserRouter>
-      <NavBar />
       <div className="bg-primary">
-        <Routes>
-          { routes.map(({ path, page }) => (
-            <Route key={path} path={path} element={page} />
-          ))}
-        </Routes>
+        <div className='ml-6 mr-6'>
+          <NavBar />
+          <Routes>
+            { routes.map(({ path, page }) => (
+              <Route key={path} path={path} element={page} />
+            ))}
+          </Routes>
+        </div>
       </div>
       
     </BrowserRouter>

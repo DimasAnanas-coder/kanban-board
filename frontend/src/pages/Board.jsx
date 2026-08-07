@@ -40,7 +40,7 @@ export default function Board() {
 
     return (
         <DndContext {...dndContextProps}>
-            <div className="min-h-screen flex justify-center">
+            <div className="min-h-screen flex justify-between gap-6">
                 { COLUMN_TITLES.map((title) => (
                     <Column
                         key={title}

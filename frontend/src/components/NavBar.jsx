@@ -11,7 +11,7 @@ function NavBar() {
     const location = useLocation();
   
     return (
-        <nav className="bg-primary p-4">
+        <nav className="bg-primary pb-4 pt-4">
             <div className="flex justify-between items-center">
                 <Logo />
                     <div className="flex gap-2">
