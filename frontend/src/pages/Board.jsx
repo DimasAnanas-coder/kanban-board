@@ -50,7 +50,13 @@ export default function Board() {
                 ))}
             </div>
             <DragOverlay>
-                { activeTask ? <Task {...activeTask} isMoving={true} /> : null }
+                { activeTask 
+                    ? <Task 
+                        task={activeTask} 
+                        isMoving={true} 
+                    /> 
+                    : null 
+                }
             </DragOverlay>
         </DndContext>  
     );

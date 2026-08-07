@@ -2,9 +2,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
 export default function Task({ 
-    id, 
-    title, 
-    description,
+    task,
     isMoving = false,
 }) {
     const {
@@ -14,7 +12,7 @@ export default function Task({
         transform,
         transition,
         isDragging,
-    } = useSortable({ id: id });
+    } = useSortable({ id: task.id });
 
     const style = {
         transform: CSS.Transform.toString(transform),
@@ -32,9 +30,20 @@ export default function Task({
             {...attributes} 
             {...listeners}
             className={`bg-thirdary rounded-md p-4 mb-4 shadow-md ${cursorRuleStyle} hover:shadow-lg transition-shadow ${movingStyle}`}
-        >
-            <h3 className="font-bold text-text mb-2">{title}</h3>
-            <p className="text-text mb-2">{description}</p>
+        >   
+            <div className='flex mb-2 justify-between text-text'>
+                <h3 className="font-bold">
+                    { task.title }
+                </h3>
+
+                <p className='text-xs'>
+                    { task.date }
+                </p>
+            </div>
+            
+            <p className="text-text mb-2">
+                { task.description }
+            </p>
         </div>
     );
 }
