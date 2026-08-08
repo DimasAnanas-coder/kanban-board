@@ -20,7 +20,7 @@ export default function Task({
         opacity: isDragging ? 0 : 1, // Скрываем оригинал, когда перетаскиваем
     };
 
-    const movingStyle = isMoving ? "border-2 border-blue-500 opacity-90" : "";
+    const movingStyle = isMoving ? "border-2 border-accent opacity-90" : "";
     const cursorRuleStyle =  isMoving ? "cursor-grabbing" : "cursor-grab active:cursor-grabbing";
     const shadowRuleStyle = "shadow-md hover:shadow-lg transition-shadow"
 

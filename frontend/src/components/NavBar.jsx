@@ -1,6 +1,5 @@
-import Button from "./Button";
+import NavLink from "./NavLink";
 import Logo from "./Logo";
-import { useLocation } from "react-router-dom";
 
 const links = [
     { name: 'Доска', to: '/board' },
@@ -8,21 +7,20 @@ const links = [
 ];
 
 function NavBar() {
-    const location = useLocation();
-  
     return (
         <nav className="bg-primary pb-4 pt-4">
             <div className="flex justify-between items-center">
                 <Logo />
-                    <div className="flex gap-2">
-                          {links.map(({ name, to }) => (
-                              <Button
-                                  title={ name } 
-                                  link={ to }
-                                  isNavigate={ true }
-                                  isActive={ location.pathname === to }
-                              />
-                        ))}
+
+                <div className="flex gap-2">
+                    {links.map(({ name, to }) => (
+                        <NavLink
+                            key={ to }
+                            to={ to }
+                        >
+                            {name}
+                        </NavLink>
+                    ))}
                 </div>
             </div>
         </nav>

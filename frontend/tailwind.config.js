@@ -12,7 +12,8 @@ module.exports = {
 
         text: '#000000',
         accentText: '#1D4ED8',
-        
+        accent: '#1D4ED8',
+
         accentHover: '#DBEAFE',
       },
     },

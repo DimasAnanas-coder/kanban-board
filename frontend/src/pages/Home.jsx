@@ -45,9 +45,10 @@ function Home() {
                 </div>
 
                 <Button 
-                    title="Перейти к доске →"
                     link="/board"
-                />
+                >
+                    Перейти к доске →
+                </Button>
 
                 <div className="mt-12 text-sm text-text/40">
                     {FOOTER_TEXT}
