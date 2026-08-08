@@ -1,4 +1,5 @@
 import AdvantageAppCard from "../components/AdvantageAppCard";
+import Button from "../components/Button";
 import { PROJECT_NAME } from "../config";
 
 const ADVANTAGES = [
@@ -43,12 +44,10 @@ function Home() {
                     ))}
                 </div>
 
-                <a 
-                    href="/board" 
-                    className="inline-block bg-accentText text-white font-semibold px-8 py-4 rounded-lg shadow-lg hover:bg-accentText/90 hover:shadow-xl transition-all duration-200 transform hover:scale-105"
-                >
-                    Перейти к доске →
-                </a>
+                <Button 
+                    title="Перейти к доске →"
+                    link="/board"
+                />
 
                 <div className="mt-12 text-sm text-text/40">
                     {FOOTER_TEXT}

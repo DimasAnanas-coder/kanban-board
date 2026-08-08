@@ -1,4 +1,4 @@
-import NavButton from "./NavButton";
+import Button from "./Button";
 import Logo from "./Logo";
 import { useLocation } from "react-router-dom";
 
@@ -16,9 +16,10 @@ function NavBar() {
                 <Logo />
                     <div className="flex gap-2">
                           {links.map(({ name, to }) => (
-                              <NavButton
-                                  name={ name } 
-                                  to={ to }
+                              <Button
+                                  title={ name } 
+                                  link={ to }
+                                  isNavigate={ true }
                                   isActive={ location.pathname === to }
                               />
                         ))}
