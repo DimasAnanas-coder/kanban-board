@@ -1,4 +1,8 @@
-const COLUMN_TITLES = ['To Do', 'In Progress', 'Done'];
+const COLUMNS = [
+    { title: 'To Do', color: '#4444EF' },
+    { title: 'In Progress', color: '#F59E0B' },
+    { title: 'Done', color: '#10B981' },
+];
 
 const PROJECT_NAME = 'Task Manager';
 
@@ -10,6 +14,6 @@ const INITIAL_TASKS = [
 
 export { 
     PROJECT_NAME, 
-    COLUMN_TITLES, 
+    COLUMNS, 
     INITIAL_TASKS 
 };

@@ -3,9 +3,12 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 
 import Task from './Task';
 
-export default function Column({ title, tasks }) {
+export default function Column({ 
+    column, 
+    tasks 
+}) {
     const { setNodeRef } = useDroppable({ 
-        id: title, 
+        id: column.title, 
     });
 
     return (
@@ -13,15 +16,20 @@ export default function Column({ title, tasks }) {
             ref={setNodeRef}
             className="container bg-secondary rounded-md pb-4 h-fit min-w-[200px] max-w-[600px]"
         >
-            <div className='m-4 text-text'>
+            <div className='text-text m-4'>
                 <div className="flex justify-between mb-4">
-                    <h2 className="font-bold">
-                        {title}
-                    </h2>
+                    <div className="rounded-full px-2 py-1" style={{background: column.color}}>
+                        <h2 className='font-bold'>
+                            {column.title}
+                        </h2>
+                    </div>
                     
-                    <p className="text-xs rounded-full bg-thirdary px-2 py-1">
-                        {tasks.length} 
-                    </p>
+                    <div>
+                        <p className="text-xs rounded-full bg-thirdary px-2 py-1">
+                            {tasks.length} 
+                        </p>
+                    </div>
+                    
                 </div>
                 
 

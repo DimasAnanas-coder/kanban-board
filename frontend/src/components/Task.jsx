@@ -1,5 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { COLUMNS } from '../config';
 
 export default function Task({ 
     task,
@@ -14,13 +15,17 @@ export default function Task({
         isDragging,
     } = useSortable({ id: task.id });
 
+    const taskColumnObj = COLUMNS.find((column) => task.column === column.title);
+    const color = taskColumnObj.color;
+
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
         opacity: isDragging ? 0 : 1, // Скрываем оригинал, когда перетаскиваем
+        borderColor: color
     };
 
-    const movingStyle = isMoving ? "border-2 border-accent opacity-90" : "";
+    const movingStyle = isMoving ? "border-2 opacity-90" : "";
     const cursorRuleStyle =  isMoving ? "cursor-grabbing" : "cursor-grab active:cursor-grabbing";
     const shadowRuleStyle = "shadow-md hover:shadow-lg transition-shadow"
 

@@ -17,7 +17,7 @@ import Task from '../components/Task';
 import AddTaskModal from '../components/AddTaskModal';
 import Button from '../components/Button';
 
-import { COLUMN_TITLES, INITIAL_TASKS } from '../config';
+import { COLUMNS, INITIAL_TASKS } from '../config';
 
 
 export default function Board() {
@@ -57,11 +57,11 @@ export default function Board() {
                     </Button>
                 </div>
                 <div className="min-h-screen flex justify-between gap-6">
-                    { COLUMN_TITLES.map((title) => (
+                    { COLUMNS.map((column) => (
                         <Column
-                            key={title}
-                            title={title} 
-                            tasks={tasks.filter(task => task.column === title)} 
+                            key={column.title}
+                            column={column}
+                            tasks={tasks.filter(task => task.column === column.title)} 
                         />
                     ))}
                 </div>
