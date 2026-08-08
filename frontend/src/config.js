@@ -12,8 +12,16 @@ const INITIAL_TASKS = [
     { id: '3', title: 'Task 3', description: 'Description for Task 3', date: '2023-01-03', column: 'To Do' },
 ];
 
+const BUTTON_COLORS = {
+    'accent': 'bg-accent hover:bg-accent/90',
+    'ok': 'bg-ok hover:bg-ok/90',
+    'error': 'bg-error hover:bg-error/90'
+}
+
+
 export { 
     PROJECT_NAME, 
     COLUMNS, 
-    INITIAL_TASKS 
+    INITIAL_TASKS,
+    BUTTON_COLORS,
 };

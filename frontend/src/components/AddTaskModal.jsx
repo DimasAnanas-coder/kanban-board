@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import Button from './Button';
+
 export default function AddTaskModal({ isOpen, onClose, onAddTask }) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -70,6 +72,20 @@ export default function AddTaskModal({ isOpen, onClose, onAddTask }) {
                             />
                         </div>
                     </form>
+                    <div className='flex justify-between gap-4'>
+                        <Button
+                            color='error'
+                            onClick={onClose}
+                        >
+                            Отменить
+                        </Button>
+                        <Button
+                            color='ok'
+                            onClick={handleSubmit}
+                        >
+                            Сохранить
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>
