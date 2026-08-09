@@ -14,7 +14,7 @@ import findTask from '../utils/findTask';
 
 import Column from '../components/Column';
 import Task from '../components/Task';
-import AddTaskModal from '../components/AddTaskModal';
+import AddTask from '../components/modals/taskModals/AddTask';
 import Button from '../components/Button';
 
 import { COLUMNS, INITIAL_TASKS } from '../config';
@@ -76,7 +76,7 @@ export default function Board() {
                 </DragOverlay>
             </DndContext>
 
-            <AddTaskModal
+            <AddTask
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 onAddTask={handleAddTask}
