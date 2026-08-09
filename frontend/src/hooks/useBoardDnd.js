@@ -9,7 +9,7 @@ import { arrayMove } from '@dnd-kit/sortable';
 
 import findTask from '../utils/findTask';
 
-export default function useBoardDnd(tasks, setTasks) {
+export function useBoardDnd(tasks, setTasks) {
     const [activeId, setActiveId] = useState(null);
 
     const sensors = useSensors(

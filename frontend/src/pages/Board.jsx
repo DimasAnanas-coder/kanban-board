@@ -4,7 +4,7 @@ import {
 } from '@dnd-kit/core';
 
 import { useState } from 'react';
-import { useTaskModal } from '../hooks/useTaskModal';
+import { useTaskModal, useBoardDnd } from '../hooks';
 
 import Column from '../components/Column';
 import Task from '../components/Task';
@@ -14,7 +14,6 @@ import AddTask from '../components/modals/taskModals/AddTask';
 import EditTask from '../components/modals/taskModals/EditTask';
 
 import { COLUMNS, INITIAL_TASKS } from '../config';
-import useBoardDnd from '../hooks/useBoardDnd';
 
 
 export default function Board() {
