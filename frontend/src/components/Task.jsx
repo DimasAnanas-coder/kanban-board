@@ -2,7 +2,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { COLUMNS } from '../config';
 
-export default function Task({ 
+export default function Task({
     task,
     isMoving = false,
 }) {
@@ -22,21 +22,21 @@ export default function Task({
         transform: CSS.Transform.toString(transform),
         transition,
         opacity: isDragging ? 0 : 1, // Скрываем оригинал, когда перетаскиваем
-        borderColor: color
+        borderColor: color,
     };
 
-    const movingStyle = isMoving ? "border-2 opacity-90" : "";
-    const cursorRuleStyle =  isMoving ? "cursor-grabbing" : "cursor-grab active:cursor-grabbing";
-    const shadowRuleStyle = "shadow-md hover:shadow-lg transition-shadow"
+    const movingStyle = isMoving ? 'border-2 opacity-90' : '';
+    const cursorRuleStyle =  isMoving ? 'cursor-grabbing' : 'cursor-grab active:cursor-grabbing';
+    const shadowRuleStyle = 'shadow-md hover:shadow-lg transition-shadow';
 
     return (
-        <div 
-            ref={setNodeRef} 
+        <div
+            ref={setNodeRef}
             style={style}
-            {...attributes} 
+            {...attributes}
             {...listeners}
             className={`bg-thirdary rounded-md p-4 mb-4 ${shadowRuleStyle} ${cursorRuleStyle} ${movingStyle}`}
-        >   
+        >
             <div className='flex mb-2 justify-between text-text'>
                 <h3 className="font-bold">
                     { task.title }
@@ -46,7 +46,7 @@ export default function Task({
                     { task.date }
                 </p>
             </div>
-            
+
             <p className="text-text mb-2">
                 { task.description }
             </p>

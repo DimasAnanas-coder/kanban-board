@@ -5,6 +5,6 @@ import NotFound from './pages/NotFound';
 export const routes = [
     { path: '/', page: <Home /> },
     { path: '/board', page: <Board /> },
-    
-    { path: '*', page: <NotFound /> },  
+
+    { path: '*', page: <NotFound /> },
 ];

@@ -7,7 +7,7 @@ export default function Logo() {
     return (
         <Link
             key="/"
-            to="/" 
+            to="/"
             className="flex items-center"
         >
             <img src={logo} alt="Logo" className="w-8 h-8" />

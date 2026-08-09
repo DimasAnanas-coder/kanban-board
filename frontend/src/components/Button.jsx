@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-import { BUTTON_COLORS } from "../config";
+import { BUTTON_COLORS } from '../config';
 
 
-export default function Button({ 
+export default function Button({
     children,
     onClick=null,
     link=null,
     className='',
     color='accent',
-    ...props 
+    ...props
 }) {
     if (!(color in BUTTON_COLORS)){
         throw new Error(`Недопустимое значение параметра color - ${color}`);
@@ -24,11 +24,11 @@ export default function Button({
             <Link
                 to={link}
                 className={finalClassName}
-                { ...props }
+                {...props}
             >
                 { children }
             </Link>
-        )
+        );
     }
 
     return (
@@ -36,8 +36,8 @@ export default function Button({
             className={finalClassName}
             onClick={onClick}
             {...props}
-        >   
+        >
             { children }
-        </button>      
+        </button>
     );
 }

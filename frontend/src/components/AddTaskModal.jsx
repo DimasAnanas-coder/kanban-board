@@ -6,11 +6,13 @@ export default function AddTaskModal({ isOpen, onClose, onAddTask }) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
-    if (!isOpen) return null;
+    if (!isOpen) {
+        return null;
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        
+
         if (!title.trim()) {
             alert('Введите название задачи');
             return;
@@ -19,24 +21,24 @@ export default function AddTaskModal({ isOpen, onClose, onAddTask }) {
         const date = new Date().toISOString().split('T')[0];
         const newTask = {
             id: Date.now().toString(),
-            date: date, 
+            date: date,
             title: title.trim(),
             description: description.trim() || 'Нет описания',
-            column: 'To Do' 
+            column: 'To Do',
         };
 
         onAddTask(newTask);
-        
+
         setTitle('');
         setDescription('');
         onClose();
     };
 
-    const borderRuleStyle = "border-thirdary focus:ring-2 focus:ring-accent focus:border-transparent"
+    const borderRuleStyle = 'border-thirdary focus:ring-2 focus:ring-accent focus:border-transparent';
     const textFieldClassName = `w-full px-4 py-2 border ${borderRuleStyle} rounded-lg focus:outline-none bg-primary`;
 
     return (
-        <div 
+        <div
             className='fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4'
             onClick={onClose}
         >
@@ -65,7 +67,7 @@ export default function AddTaskModal({ isOpen, onClose, onAddTask }) {
                         <div className='mb-4'>
                             <textarea
                                 value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                onChange={(event) => setDescription(event.target.value)}
                                 placeholder="Введите описание (необязательно)..."
                                 rows="3"
                                 className={textFieldClassName}

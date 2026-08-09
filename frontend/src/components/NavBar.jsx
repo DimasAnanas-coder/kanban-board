@@ -1,5 +1,5 @@
-import NavLink from "./NavLink";
-import Logo from "./Logo";
+import NavLink from './NavLink';
+import Logo from './Logo';
 
 const links = [
     { name: 'Доска', to: '/board' },
@@ -15,8 +15,8 @@ function NavBar() {
                 <div className="flex gap-2">
                     {links.map(({ name, to }) => (
                         <NavLink
-                            key={ to }
-                            to={ to }
+                            key={to}
+                            to={to}
                         >
                             {name}
                         </NavLink>
