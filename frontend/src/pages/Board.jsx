@@ -1,17 +1,10 @@
 import {
     DndContext,
-    closestCorners,
-    PointerSensor,
-    useSensor,
-    useSensors,
     DragOverlay,
 } from '@dnd-kit/core';
 
 import { useState } from 'react';
 import { useTaskModal } from '../hooks/useTaskModal';
-
-import dragHandler from '../utils/dragHandler';
-import findTask from '../utils/findTask';
 
 import Column from '../components/Column';
 import Task from '../components/Task';
@@ -21,11 +14,12 @@ import AddTask from '../components/modals/taskModals/AddTask';
 import EditTask from '../components/modals/taskModals/EditTask';
 
 import { COLUMNS, INITIAL_TASKS } from '../config';
+import useBoardDnd from '../hooks/useBoardDnd';
 
 
 export default function Board() {
     const [tasks, setTasks] = useState(INITIAL_TASKS);
-    const [activeId, setActiveId] = useState(null);
+
     const {
         modal,
         openAddModal,
@@ -45,29 +39,14 @@ export default function Board() {
         ));
     };
 
-    const sensors = useSensors(
-        useSensor(PointerSensor, {
-            activationConstraint: { distance: 5 },
-        }),
-    );
-
-    const handler = new dragHandler(setTasks, setActiveId);
-    const activeTask = findTask(tasks, activeId);
-
-    const dndContextProps = {
-        sensors,
-        collisionDetection: closestCorners,
-        onDragStart: handler.start.bind(handler),
-        onDragOver: handler.over.bind(handler),
-        onDragEnd: handler.end.bind(handler),
-    };
+    const { activeTask, dndContextProps } = useBoardDnd(tasks, setTasks);
 
     return (
         <>
             <DndContext {...dndContextProps}>
                 <div className='justify-self-end mt-4 mb-4'>
                     <Button
-                        onClick={() => openAddModal(true)}
+                        onClick={openAddModal}
                     >
                         Добавить задачу
                     </Button>
@@ -83,13 +62,12 @@ export default function Board() {
                     ))}
                 </div>
                 <DragOverlay>
-                    { activeTask
-                        ? <Task
+                    { activeTask && (
+                        <Task
                             task={activeTask}
                             isMoving={true}
                         />
-                        : null
-                    }
+                    )}
                 </DragOverlay>
             </DndContext>
 
