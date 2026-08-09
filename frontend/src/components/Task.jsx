@@ -1,9 +1,11 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { COLUMNS } from '../config';
+import editIcon from '../assets/editWhite.svg';
 
 export default function Task({
     task,
+    onEditClick,
     isMoving = false,
 }) {
     const {
@@ -47,9 +49,19 @@ export default function Task({
                 </p>
             </div>
 
-            <p className="text-text mb-2">
-                { task.description }
-            </p>
+            <div className='flex justify-between'>
+                <p className="text-text mb-2">
+                    { task.description }
+                </p>
+                {!isMoving && (
+                    <button
+                        onClick={() => onEditClick(task)}
+                    >
+                        <img src={editIcon} alt="Edit" className="w-8 h-8" />
+                    </button>
+                )
+                }
+            </div>
         </div>
     );
 }

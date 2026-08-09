@@ -6,6 +6,7 @@ import Task from './Task';
 export default function Column({
     column,
     tasks,
+    onEditClick,
 }) {
     const { setNodeRef } = useDroppable({
         id: column.title,
@@ -41,6 +42,7 @@ export default function Column({
                         <Task
                             key={task.id}
                             task={task}
+                            onEditClick={onEditClick}
                         />
                     ))}
                 </SortableContext>

@@ -8,14 +8,17 @@ import {
 } from '@dnd-kit/core';
 
 import { useState } from 'react';
+import { useTaskModal } from '../hooks/useTaskModal';
 
 import dragHandler from '../utils/dragHandler';
 import findTask from '../utils/findTask';
 
 import Column from '../components/Column';
 import Task from '../components/Task';
-import AddTask from '../components/modals/taskModals/AddTask';
 import Button from '../components/Button';
+
+import AddTask from '../components/modals/taskModals/AddTask';
+import EditTask from '../components/modals/taskModals/EditTask';
 
 import { COLUMNS, INITIAL_TASKS } from '../config';
 
@@ -23,10 +26,23 @@ import { COLUMNS, INITIAL_TASKS } from '../config';
 export default function Board() {
     const [tasks, setTasks] = useState(INITIAL_TASKS);
     const [activeId, setActiveId] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const {
+        modal,
+        openAddModal,
+        openEditModal,
+        closeModal,
+    } = useTaskModal();
 
     const handleAddTask = (newTask) => {
         setTasks((prevTasks) => [...prevTasks, newTask]);
+    };
+
+    const handleEditTask = (editedTask) => {
+        setTasks((prevTasks) => (
+            prevTasks.map((task) => (
+                task.id === editedTask.id ? editedTask : task
+            ))
+        ));
     };
 
     const sensors = useSensors(
@@ -51,7 +67,7 @@ export default function Board() {
             <DndContext {...dndContextProps}>
                 <div className='justify-self-end mt-4 mb-4'>
                     <Button
-                        onClick={() => setIsModalOpen(true)}
+                        onClick={() => openAddModal(true)}
                     >
                         Добавить задачу
                     </Button>
@@ -62,6 +78,7 @@ export default function Board() {
                             key={column.title}
                             column={column}
                             tasks={tasks.filter(task => task.column === column.title)}
+                            onEditClick={openEditModal}
                         />
                     ))}
                 </div>
@@ -76,11 +93,23 @@ export default function Board() {
                 </DragOverlay>
             </DndContext>
 
-            <AddTask
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onAddTask={handleAddTask}
-            />
+            {modal?.type === 'add' && (
+                <AddTask
+                    isOpen
+                    onClose={closeModal}
+                    onAddTask={handleAddTask}
+                />
+            )}
+
+            {modal?.type === 'edit' && (
+                <EditTask
+                    key={modal.task.id}
+                    isOpen
+                    task={modal.task}
+                    onClose={closeModal}
+                    onEditTask={handleEditTask}
+                />
+            )}
         </>
     );
 }
