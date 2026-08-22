@@ -19,7 +19,7 @@ export default function EditTask({
     return (
         <BaseModal isOpen={isOpen} onClose={onClose}>
             <div className="m-4 text-text">
-                <h3 className="flex justify-center mb-4">
+                <h3 className="flex font-bold justify-center mb-4">
                     Изменение задачи
                 </h3>
 

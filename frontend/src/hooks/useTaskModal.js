@@ -14,6 +14,13 @@ export function useTaskModal() {
         });
     };
 
+    const openDeleteModal = (task) => {
+        setModal({
+            type: 'delete',
+            task,
+        });
+    };
+
     const closeModal = () => {
         setModal(null);
     };
@@ -22,6 +29,7 @@ export function useTaskModal() {
         modal,
         openAddModal,
         openEditModal,
+        openDeleteModal,
         closeModal,
     };
 }

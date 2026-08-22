@@ -10,8 +10,7 @@ import Column from '../components/Column';
 import Task from '../components/Task';
 import Button from '../components/Button';
 
-import AddTask from '../components/modals/taskModals/AddTask';
-import EditTask from '../components/modals/taskModals/EditTask';
+import { AddTask, EditTask, DeleteTask } from '../components/modals/taskModals';
 
 import { COLUMNS, INITIAL_TASKS } from '../config';
 
@@ -23,6 +22,7 @@ export default function Board() {
         modal,
         openAddModal,
         openEditModal,
+        openDeleteModal,
         closeModal,
     } = useTaskModal();
 
@@ -34,6 +34,14 @@ export default function Board() {
         setTasks((prevTasks) => (
             prevTasks.map((task) => (
                 task.id === editedTask.id ? editedTask : task
+            ))
+        ));
+    };
+
+    const handleDeleteTask = (deletedTask) => {
+        setTasks((prevTasks) => (
+            prevTasks.filter((task) => (
+                task.id !== deletedTask.id
             ))
         ));
     };
@@ -57,6 +65,7 @@ export default function Board() {
                             column={column}
                             tasks={tasks.filter(task => task.column === column.title)}
                             onEditClick={openEditModal}
+                            onDeleteClick={openDeleteModal}
                         />
                     ))}
                 </div>
@@ -87,6 +96,17 @@ export default function Board() {
                     onEditTask={handleEditTask}
                 />
             )}
+
+            {modal?.type === 'delete' && (
+                <DeleteTask
+                    key={modal.task.id}
+                    isOpen
+                    task={modal.task}
+                    onClose={closeModal}
+                    onDeleteTask={handleDeleteTask}
+                />
+            )}
+
         </>
     );
 }

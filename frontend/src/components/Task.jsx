@@ -1,11 +1,14 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { COLUMNS } from '../config';
+
 import editIcon from '../assets/editWhite.svg';
+import trashIcon from '../assets/trash.svg';
 
 export default function Task({
     task,
     onEditClick,
+    onDeleteClick,
     isMoving = false,
 }) {
     const {
@@ -18,16 +21,16 @@ export default function Task({
     } = useSortable({ id: task.id });
 
     const taskColumnObj = COLUMNS.find((column) => task.column === column.title);
-    const color = taskColumnObj.color;
+    const color = isMoving ? taskColumnObj.color : null;
 
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
-        opacity: isDragging ? 0 : 1, // Скрываем оригинал, когда перетаскиваем
+        opacity: isDragging ? 0.2 : 1, // Скрываем оригинал, когда перетаскиваем
         borderColor: color,
     };
 
-    const movingStyle = isMoving ? 'border-2 opacity-90' : '';
+    const borderStyle = isMoving ? '' : 'border-thirdary';
     const cursorRuleStyle =  isMoving ? 'cursor-grabbing' : 'cursor-grab active:cursor-grabbing';
     const shadowRuleStyle = 'shadow-md hover:shadow-lg transition-shadow';
 
@@ -37,30 +40,43 @@ export default function Task({
             style={style}
             {...attributes}
             {...listeners}
-            className={`bg-thirdary rounded-md p-4 mb-4 ${shadowRuleStyle} ${cursorRuleStyle} ${movingStyle}`}
+            className={`bg-thirdary border-2 flex rounded-md p-4 mb-4 ${shadowRuleStyle} ${cursorRuleStyle} ${borderStyle} gap-2`}
         >
-            <div className='flex mb-2 justify-between text-text'>
+            <div className='b-2 flex text-text flex-1 flex-col'>
                 <h3 className="font-bold">
                     { task.title }
                 </h3>
-
-                <p className='text-xs'>
-                    { task.date }
-                </p>
+                <div className='mb-2'>
+                    <p className="text-text ">
+                        { task.description }
+                    </p>
+                </div>
             </div>
 
-            <div className='flex justify-between'>
-                <p className="text-text mb-2">
-                    { task.description }
-                </p>
+            <div className='flex flex-col justify-between min-w-18 w-18'>
+                <div className='flex justify-end'>
+                    <p className='text-xs'>
+                        { task.date }
+                    </p>
+                </div>
+
+
                 {!isMoving && (
-                    <button
-                        onClick={() => onEditClick(task)}
-                    >
-                        <img src={editIcon} alt="Edit" className="w-8 h-8" />
-                    </button>
-                )
-                }
+                    <div className='flex justify-between h-8 w-full'>
+                        <button
+                            onClick={() => onEditClick(task)}
+                        >
+                            <img src={editIcon} alt="Edit" className="w-8 h-8" />
+                        </button>
+
+                        <button
+                            onClick={() => onDeleteClick(task)}
+                        >
+                            <img src={trashIcon} alt="Delete" className="w-8 h-8" />
+                        </button>
+
+                    </div>
+                )}
             </div>
         </div>
     );

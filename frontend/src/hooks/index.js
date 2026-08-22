@@ -1,9 +1,9 @@
-import { useBoardDnd } from "./useBoardDnd";
-import { useTaskForm } from "./useTaskForm";
-import { useTaskModal } from "./useTaskModal";
+import { useBoardDnd } from './useBoardDnd';
+import { useTaskForm } from './useTaskForm';
+import { useTaskModal } from './useTaskModal';
 
-export { 
-    useBoardDnd, 
-    useTaskForm, 
+export {
+    useBoardDnd,
+    useTaskForm,
     useTaskModal,
-}
+};
