@@ -6,18 +6,18 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                primary: '#EEEEEE',
-                secondary: '#FFFFFF',
-                thirdary: '#CCCCCC',
+                primary: 'rgb(var(--color-primary) / <alpha-value>)',
+                secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
+                thirdary: 'rgb(var(--color-thirdary) / <alpha-value>)',
 
-                text: '#000000',
-                accentText: '#1D4ED8',
-                accent: '#1D4ED8',
+                text: 'rgb(var(--color-text) / <alpha-value>)',
+                accentText: 'rgb(var(--color-accent-text) / <alpha-value>)',
+                accent: 'rgb(var(--color-accent) / <alpha-value>)',
 
-                accentHover: '#DBEAFE',
+                accentHover: 'rgb(var(--color-accent-hover) / <alpha-value>)',
 
-                error: '#DD2200',
-                ok: '#22DD77',
+                error: 'rgb(var(--color-error) / <alpha-value>)',
+                ok: 'rgb(var(--color-ok) / <alpha-value>)',
             },
         },
     },

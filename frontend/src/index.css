@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --color-primary: 248 250 252;
+    --color-secondary: 255 255 255;
+    --color-thirdary: 226 232 240;
+    --color-text: 15 23 42;
+    --color-accent-text: 29 78 216;
+    --color-accent: 37 99 235;
+    --color-accent-hover: 219 234 254;
+    --color-error: 220 38 38;
+    --color-ok: 21 128 61;
+}
+
+.dark {
+    --color-primary: 15 23 42;
+    --color-secondary: 30 41 59;
+    --color-thirdary: 51 65 85;
+    --color-text: 248 250 252;
+    --color-accent-text: 191 219 254;
+    --color-accent: 96 165 250;
+    --color-accent-hover: 30 58 138;
+    --color-error: 248 113 113;
+    --color-ok: 74 222 128;
+}
