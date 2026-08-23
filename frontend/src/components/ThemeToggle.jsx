@@ -10,7 +10,7 @@ export default function ThemeToggle() {
         <button
             type="button"
             onClick={toggleTheme}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg shadow-sm ring-1 ring-thirdary transition hover:bg-thirdary focus:outline-none focus:ring-2 focus:ring-accent"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg shadow-sm ring-1 ring-thirdary transition hover:bg-thirdary"
             title={label}
         >
             <img

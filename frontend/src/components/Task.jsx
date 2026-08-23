@@ -65,12 +65,14 @@ export default function Task({
                     <div className='flex justify-between h-8 w-full'>
                         <button
                             onClick={() => onEditClick(task)}
+                            title="Изменить задачу"
                         >
                             <img src={editIcon} alt="Edit" className="w-8 h-8" />
                         </button>
 
                         <button
                             onClick={() => onDeleteClick(task)}
+                            title="Удалить задачу"
                         >
                             <img src={trashIcon} alt="Delete" className="w-8 h-8" />
                         </button>
