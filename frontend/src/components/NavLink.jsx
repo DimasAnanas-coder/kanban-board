@@ -11,7 +11,7 @@ export default function NavLink({
 
     const activeStyles = isActive
         ? 'bg-accentHover text-accentText'
-        : 'bg-primary hover:bg-thirdary text-text';
+        : 'bg-primary hover:bg-thirdary';
 
     return (
         <Link

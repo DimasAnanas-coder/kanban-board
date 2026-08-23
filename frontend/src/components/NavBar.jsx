@@ -1,5 +1,6 @@
 import NavLink from './NavLink';
 import Logo from './Logo';
+import ThemeToggle from './ThemeToggle';
 
 const links = [
     { name: 'Доска', to: '/board' },
@@ -8,11 +9,11 @@ const links = [
 
 function NavBar() {
     return (
-        <nav className="bg-primary pb-4 pt-4">
+        <nav className="bg-primary pb-4 pt-4 text-text">
             <div className="flex justify-between items-center">
                 <Logo />
 
-                <div className="flex gap-2">
+                <div className="flex items-center gap-2">
                     {links.map(({ name, to }) => (
                         <NavLink
                             key={to}
@@ -21,6 +22,7 @@ function NavBar() {
                             {name}
                         </NavLink>
                     ))}
+                    <ThemeToggle />
                 </div>
             </div>
         </nav>
