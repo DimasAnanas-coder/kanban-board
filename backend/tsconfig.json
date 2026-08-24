@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    // === Модули (СОГЛАСОВАНЫ!) ===
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "lib": ["ES2022", "dom"],
+    
+    // === Декораторы (нужны для NestJS) ===
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    
+    // === Совместимость ===
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    
+    // === Выходные файлы ===
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "removeComments": true,
+    "sourceMap": true,
+    
+    // === Пути (алиасы) ===
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    
+    // === Строгость ===
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictBindCallApply": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    
+    // === Прочее ===
+    "incremental": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    
+    // === Подавляем предупреждение о baseUrl ===
+    "ignoreDeprecations": "6.0"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "prisma"]
+}
