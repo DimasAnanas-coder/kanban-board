@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/main.ts",
   "scripts": {
-    "start:dev": "tsx --watch src/main.ts",
+    "dev": "tsx --watch src/main.ts",
     "build": "tsc",
     "start": "node dist/main.js",
     "lint": "eslint .",
@@ -38,6 +38,7 @@
     "nodemon": "^3.1.14",
     "prettier": "^3.9.6",
     "ts-node": "^10.9.2",
+    "tsx": "^4.23.12",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.67.0"
   }

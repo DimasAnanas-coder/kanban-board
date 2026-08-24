@@ -1,0 +1,13 @@
+services:
+  backend:
+    container_name: kanban-board-backend-dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app/backend
+      - /app/backend/node_modules
+    environment:
+      RUNNING_IN_DOCKER: "true"
+    ports:
+      - "3010:3010"

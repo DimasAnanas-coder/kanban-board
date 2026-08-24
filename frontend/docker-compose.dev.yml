@@ -2,12 +2,12 @@ services:
   frontend:
     container_name: kanban-board-frontend-dev
     build:
-      context: .
+      context: ../frontend # потому что backend объявлен раньше в команде сборки контейнера и контекст устанавливается на бекенд
       dockerfile: Dockerfile
       target: dev
     volumes:
-      - /app
-      - /app/node_modules
+      - ../frontend:/app/frontend
+      - /app/frontend/node_modules
     environment:
       RUNNING_IN_DOCKER: "true"
     ports:
