@@ -2,14 +2,13 @@ services:
   frontend:
     container_name: kanban-board-frontend-dev
     build:
-      context: ./frontend
+      context: .
       dockerfile: Dockerfile
       target: dev
     volumes:
-      - ./frontend:/app
+      - /app
       - /app/node_modules
     environment:
       RUNNING_IN_DOCKER: "true"
     ports:
       - "5173:5173"
-    
