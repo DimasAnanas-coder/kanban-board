@@ -1,13 +1,14 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module.js';
 import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 
-async function bootstrap() {
+import { AppModule } from './app.module.js';
+
+async function bootstrap(): Promise<undefined> {
     const app = await NestFactory.create(AppModule);
-  
+
     app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-    
-    const port = 3010
+
+    const port = 3010;
     await app.listen(port);
     console.log(`🚀 Server running on http://localhost:${port}`);
 }
