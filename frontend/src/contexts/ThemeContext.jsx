@@ -1,19 +1,19 @@
-import { createContext, useContext, useEffect } from "react";
-import { useLocalStorage } from "../hooks";
-import { START_THEME, LIGHT_THEME, DARK_THEME } from "../themes";
+import { createContext, useContext, useEffect } from 'react';
+import { useLocalStorage } from '../hooks';
+import { START_THEME, LIGHT_THEME, DARK_THEME } from '../themes';
 
 
 const ThemeContext = createContext();
 
 
-export function ThemeProvider({children}) {
+export function ThemeProvider({ children }) {
     const [theme, setTheme] = useLocalStorage('theme', START_THEME);
 
     const isDark = theme === DARK_THEME;
 
     const toggleTheme = () => {
         setTheme(isDark ? LIGHT_THEME : DARK_THEME);
-    }
+    };
 
     useEffect(() => {
         document.documentElement.classList.toggle(DARK_THEME, isDark);
@@ -25,8 +25,8 @@ export function ThemeProvider({children}) {
             isDark,
         }}>
             {children}
-        </ ThemeContext.Provider>
-    )
+        </ThemeContext.Provider>
+    );
 };
 
 

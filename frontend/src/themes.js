@@ -6,6 +6,5 @@ const START_THEME = LIGHT_THEME;
 export {
     START_THEME,
     DARK_THEME,
-    LIGHT_THEME
-}
-    
+    LIGHT_THEME,
+};
