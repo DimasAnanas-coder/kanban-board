@@ -3,11 +3,18 @@ import { TitleDescriptionForm } from '../forms/combinations';
 import { FormActions } from '../forms';
 import { useTaskForm } from '../../../hooks/useTaskForm';
 
-export default function AddTask({ isOpen, onClose, onAddTask }) {
+export default function AddTask({
+    isOpen,
+    onClose,
+    onAddTask,
+    showAlert,
+}) {
     const { title, setTitle, description, setDescription, handleSubmit } = useTaskForm(
         null,
         onAddTask,
         onClose,
+        false,
+        showAlert,
     );
 
     return (

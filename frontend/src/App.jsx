@@ -13,12 +13,12 @@ function App() {
         <BrowserRouter>
             <AppProvider>
                 <BasePage>
-                        <NavBar />
-                        <Routes>
-                            { routes.map(({ path, page }) => (
-                                <Route key={path} path={path} element={page} />
-                            ))}
-                        </Routes>
+                    <NavBar />
+                    <Routes>
+                        { routes.map(({ path, page }) => (
+                            <Route key={path} path={path} element={page} />
+                        ))}
+                    </Routes>
                 </BasePage>
             </AppProvider>
         </BrowserRouter>

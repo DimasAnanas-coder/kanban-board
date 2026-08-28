@@ -8,12 +8,14 @@ export default function EditTask({
     task,
     onClose,
     onEditTask,
+    showAlert,
 }) {
     const { title, setTitle, description, setDescription, handleSubmit } = useTaskForm(
         task,
         onEditTask,
         onClose,
         true,
+        showAlert,
     );
 
     return (

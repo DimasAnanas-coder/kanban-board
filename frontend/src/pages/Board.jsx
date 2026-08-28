@@ -4,7 +4,7 @@ import {
 } from '@dnd-kit/core';
 
 import { useState } from 'react';
-import { useTaskModal, useBoardDnd } from '../hooks';
+import { useTaskModal, useBoardDnd, useAlert } from '../hooks';
 
 import Column from '../components/Column';
 import Task from '../components/Task';
@@ -48,6 +48,8 @@ export default function Board() {
 
     const { activeTask, dndContextProps } = useBoardDnd(tasks, setTasks);
 
+    const { showAlert, AlertComponent } = useAlert();
+
     return (
         <>
             <DndContext {...dndContextProps}>
@@ -84,6 +86,7 @@ export default function Board() {
                     isOpen
                     onClose={closeModal}
                     onAddTask={handleAddTask}
+                    showAlert={showAlert}
                 />
             )}
 
@@ -94,6 +97,7 @@ export default function Board() {
                     task={modal.task}
                     onClose={closeModal}
                     onEditTask={handleEditTask}
+                    showAlert={showAlert}
                 />
             )}
 
@@ -107,6 +111,7 @@ export default function Board() {
                 />
             )}
 
+            { AlertComponent }
         </>
     );
 }

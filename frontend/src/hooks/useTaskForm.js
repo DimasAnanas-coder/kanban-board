@@ -20,6 +20,7 @@ export function useTaskForm(
     onSubmit,
     onClose,
     isEditing = false,
+    showAlert,
 ) {
     const [title, setTitle] = useState(initialTask?.title || '');
     const [description, setDescription] = useState(initialTask?.description || '');
@@ -28,7 +29,7 @@ export function useTaskForm(
         event.preventDefault();
 
         if (!title.trim()) {
-            alert('Введите название задачи');
+            showAlert('Введите название задачи');
             return;
         }
 
