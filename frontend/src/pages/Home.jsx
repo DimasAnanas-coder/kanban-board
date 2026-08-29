@@ -7,29 +7,36 @@ const ADVANTAGES = [
         title: 'Три колонки',
         description: 'To Do, In Progress, Done — стандартный workflow',
         icon: '📋',
+        width: 1,
     },
     {
         title: 'Drag & Drop',
         description: 'Перетаскивайте карточки мышкой или сенсором',
         icon: '🔄',
+        width: 2,
     },
     {
         title: 'Плавный UX',
-        description: 'Анимации и обратная связь при взаимодействии',
+        description: 'Анимации и обратная связь при взаимодействии. Сопровождается понятными алертами',
         icon: '⚡',
+        width: 2,
+    },
+    {
+        title: 'Полный контроль',
+        description: 'Задачи можно создавать, изменять и удалять',
+        icon: '🧩',
+        width: 1,
     },
 ];
 
 const PROJECT_DESCRIPTION = 'Управляйте своими задачами с помощью интуитивной доски. Перетаскивайте карточки между колонками, отслеживайте прогресс и достигайте целей!';
 
-const FOOTER_TEXT = 'Built with React, Tailwind CSS, and dnd-kit. Idea by AI, but my own solution';
-
-function Home() {
+export default function Home() {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-primary px-4">
             <div className="max-w-3xl text-center">
 
-                <h1 className="text-5xl font-extrabold text-text mb-4 tracking-tight">
+                <h1 className="text-5xl font-extrabold text-text mb-2 tracking-tight">
                     🚀 Добро пожаловать в
                     <span className="text-accentText"> {PROJECT_NAME}</span>
                 </h1>
@@ -38,9 +45,13 @@ function Home() {
                     {PROJECT_DESCRIPTION}
                 </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                    {ADVANTAGES.map((advantage, index) => (
-                        <AdvantageAppCard key={index} {...advantage} />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-10">
+                    {ADVANTAGES.map((advantage, index, width) => (
+                        <AdvantageAppCard 
+                            key={index}
+                            width={width}
+                            {...advantage} 
+                        />
                     ))}
                 </div>
 
@@ -49,13 +60,7 @@ function Home() {
                 >
                     Перейти к доске →
                 </Button>
-
-                <div className="mt-12 text-sm text-text/40">
-                    {FOOTER_TEXT}
-                </div>
             </div>
         </div>
     );
 }
-
-export default Home;
