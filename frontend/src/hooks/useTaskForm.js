@@ -29,7 +29,7 @@ export function useTaskForm(
         event.preventDefault();
 
         if (!title.trim()) {
-            showAlert('Введите название задачи');
+            showAlert('Введите название задачи', 'error');
             return;
         }
 
@@ -54,6 +54,9 @@ export function useTaskForm(
         setTitle('');
         setDescription('');
         onClose();
+
+        const actionTypeText = isEditing ? 'обновлена' : 'добавлена';
+        showAlert(`Задача успешно ${actionTypeText}`, 'ok');
     };
 
     return {

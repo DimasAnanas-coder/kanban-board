@@ -18,10 +18,17 @@ const BUTTON_COLORS = {
     'error': 'bg-error hover:bg-error/90',
 };
 
+const ALERT_COLORS = {
+    'accent': 'ring-accent',
+    'ok': 'ring-ok',
+    'error': 'ring-error',
+};
+
 
 export {
     PROJECT_NAME,
     COLUMNS,
     INITIAL_TASKS,
     BUTTON_COLORS,
+    ALERT_COLORS,
 };

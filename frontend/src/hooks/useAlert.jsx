@@ -11,19 +11,21 @@ export function useAlert() {
         text: '',
     });
 
-    const showAlert = useCallback((text) => {
+    const showAlert = (text, color) => {
         setAlert({
             isOpen: true,
             text,
+            color
         });
-    }, []);
+    };
 
-    const hideAlert = useCallback(() => {
+    const hideAlert = () => {
         setAlert({
             isOpen: false,
             text: '',
+            color: ''
         });
-    }, []);
+    };
 
     useEffect(() => {
          const timeoutId = setTimeout(hideAlert, ALERT_DELAY_MS);
@@ -32,6 +34,7 @@ export function useAlert() {
 
     const AlertComponent = alert.isOpen ? (<Alert
         text={alert.text}
+        color={alert.color}
     />) : null;
 
     return { showAlert, AlertComponent };
