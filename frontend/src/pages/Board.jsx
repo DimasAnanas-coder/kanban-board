@@ -26,8 +26,11 @@ export default function Board() {
         closeModal,
     } = useTaskModal();
 
+    const { showAlert, AlertComponent } = useAlert();
+
     const handleAddTask = (newTask) => {
         setTasks((prevTasks) => [...prevTasks, newTask]);
+        showAlert('Задача успешно добавлена', 'ok');
     };
 
     const handleEditTask = (editedTask) => {
@@ -36,6 +39,7 @@ export default function Board() {
                 task.id === editedTask.id ? editedTask : task
             ))
         ));
+        showAlert('Задача успешно обновлена', 'ok');
     };
 
     const handleDeleteTask = (deletedTask) => {
@@ -44,11 +48,10 @@ export default function Board() {
                 task.id !== deletedTask.id
             ))
         ));
+        showAlert('Задача успешно удалена', 'ok');
     };
 
     const { activeTask, dndContextProps } = useBoardDnd(tasks, setTasks);
-
-    const { showAlert, AlertComponent } = useAlert();
 
     return (
         <>

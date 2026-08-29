@@ -54,9 +54,6 @@ export function useTaskForm(
         setTitle('');
         setDescription('');
         onClose();
-
-        const actionTypeText = isEditing ? 'обновлена' : 'добавлена';
-        showAlert(`Задача успешно ${actionTypeText}`, 'ok');
     };
 
     return {
