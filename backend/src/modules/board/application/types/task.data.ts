@@ -10,3 +10,9 @@ export interface CreateTaskCommand {
     title: string;
     description?: string;
 }
+
+export interface UpdateTaskCommand {
+    id: number;
+    title?: string;
+    description?: string;
+}

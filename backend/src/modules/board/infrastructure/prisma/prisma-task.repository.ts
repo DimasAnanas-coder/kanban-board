@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import type { Task as PrismaTask } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 
-import { CreateTaskCommand, TaskData } from '../../application/types/task.data.js';
+import { CreateTaskCommand, TaskData, UpdateTaskCommand } from '../../application/types/task.data.js';
 
 @Injectable()
 export class PrismaTaskRepository {
@@ -25,6 +25,20 @@ export class PrismaTaskRepository {
                 description: command.description,
             },
         });
+
+        return this.toTaskData(task);
+    }
+
+    async updateTask(command: UpdateTaskCommand): Promise<TaskData> {
+        const task = await this.prisma.task.update({
+            where: {
+                id: command.id
+            },
+            data: {
+                ...(command.title && {title: command.title}),
+                ...(command.description && {description: command.description}),
+            }
+        })
 
         return this.toTaskData(task);
     }
