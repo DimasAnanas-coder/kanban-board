@@ -1,23 +1,12 @@
-import { Task, Prisma } from '@prisma/client';
-import { TaskResponseDTO, CreateTaskRequestDTO } from '../dto/index.js';
+import type { TaskData } from '../../../application/types/task.data.js';
+import { TaskResponseDTO } from '../dto/index.js';
 
-export function mapTaskToTaskResponse(task: Task): TaskResponseDTO {
-    const taskResponse: TaskResponseDTO = {
-        id: task.id,
-        title: task.title,
-        columnName: task.columnName,
-        description: task?.description ?? undefined,
-        createdAt: task.createdAt
-    };
-
-    return taskResponse;
-}
-
-export function mapCreateTaskRequestToTask(task: CreateTaskRequestDTO): Prisma.TaskUpdateInput{
-    const mappedTask: Prisma.TaskUpdateInput = {
-        title: task.title,
-        description: task.description
-    };
-
-    return mappedTask
+export function mapTaskToResponse(task: TaskData): TaskResponseDTO {
+    return new TaskResponseDTO(
+        task.id,
+        task.title,
+        task.columnName,
+        task?.description,
+        task.createdAt.toISOString()
+    );
 }

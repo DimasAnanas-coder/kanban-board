@@ -4,27 +4,43 @@ import {
     Post, 
     Param, 
     Body,
-    HttpCode
+    HttpCode,
+    NotFoundException
 } from '@nestjs/common';
 
-import TaskService from '../../../domain/services/task.service.js';
 import { CreateTaskRequestDTO, TaskResponseDTO } from '../dto/index.js';
+import { CreateTaskUseCase } from '../../../application/use-сases/create-task.use-case.js';
+import { GetTaskUseCase } from '../../../application/use-сases/get-task.use-case.js';
+import { mapTaskToResponse } from '../mappers/task.mapper.js';
 
 
 @Controller('task')
 export class TaskController {
-    constructor(private readonly taskService: TaskService) {}
+    constructor(
+        private readonly createTask: CreateTaskUseCase,
+        private readonly getTask: GetTaskUseCase
+    ) {}
 
     @Get(':id')
     @HttpCode(200)
-    async getTask(@Param('id') id: number): Promise<TaskResponseDTO> {
-        return await this.taskService.getTask(id);
+    async findById(@Param('id') id: number): Promise<TaskResponseDTO> {
+        const task = await this.getTask.execute(id);
+        
+        if (!task) {
+            throw new NotFoundException('Данной задачи нет');
+        }
+
+        return mapTaskToResponse(task);
     }
 
     @Post()
     @HttpCode(201)
-    async createTask(@Body() task: CreateTaskRequestDTO) {
-        console.log('Received body:', JSON.stringify(task)); 
-        await this.taskService.createTask(task);
+    async create(@Body() request: CreateTaskRequestDTO) {
+        const task = await this.createTask.execute({
+            title: request.title,
+            description: request.description,
+        });
+
+        return mapTaskToResponse(task);
     }
 }
