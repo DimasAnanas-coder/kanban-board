@@ -16,11 +16,7 @@ export class TaskController {
     @HttpCode(200)
     async findById(@Param('id') id: number): Promise<TaskResponseDTO> {
         const task = await this.getTask.execute(id);
-
-        if (!task) {
-            throw new NotFoundException('Данной задачи нет');
-        }
-
+        
         return mapTaskToResponse(task);
     }
 
