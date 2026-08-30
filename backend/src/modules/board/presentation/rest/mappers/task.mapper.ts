@@ -1,5 +1,5 @@
-import type { TaskData } from '../../../application/types/task.data.js';
-import { TaskResponseDTO } from '../dto/index.js';
+import type { CreateTaskCommand, TaskData } from '../../../application/types/task.data.js';
+import { CreateTaskRequestDTO, TaskResponseDTO } from '../dto/index.js';
 
 export function mapTaskToResponse(task: TaskData): TaskResponseDTO {
     return new TaskResponseDTO(
@@ -9,4 +9,13 @@ export function mapTaskToResponse(task: TaskData): TaskResponseDTO {
         task?.description,
         task.createdAt.toISOString(),
     );
+}
+
+export function mapCreateTaskRequestToInput(
+    request: CreateTaskRequestDTO,
+): CreateTaskCommand {
+    return {
+        title: request.title,
+        description: request.description,
+    };
 }
