@@ -4,9 +4,9 @@ export interface TaskData {
     description: string | null;
     columnName: string;
     createdAt: Date;
-};
+}
 
 export interface CreateTaskCommand {
     title: string;
     description?: string;
-};
+}

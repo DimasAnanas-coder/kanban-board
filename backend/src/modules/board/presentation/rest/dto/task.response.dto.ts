@@ -4,6 +4,6 @@ export class TaskResponseDTO {
         private readonly title: string,
         private readonly columnName: string,
         private readonly description: string | null,
-        private readonly createdAt: string
-    ) {};
+        private readonly createdAt: string,
+    ) {}
 }

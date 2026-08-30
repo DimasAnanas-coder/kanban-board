@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from 'nestjs-prisma';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaModule } from 'nestjs-prisma';
 
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
@@ -14,9 +14,9 @@ import { BoardModule } from './modules/board/board.module.js';
             envFilePath: '.env',
         }),
         PrismaModule.forRoot({
-            isGlobal: true
+            isGlobal: true,
         }),
-        BoardModule
+        BoardModule,
     ],
     controllers: [AppController],
     providers: [AppService],

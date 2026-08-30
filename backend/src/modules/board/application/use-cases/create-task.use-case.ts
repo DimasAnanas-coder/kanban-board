@@ -1,8 +1,7 @@
-import { Injectable, Inject } from "@nestjs/common";
+import { Injectable, Inject } from '@nestjs/common';
 
-import { TASK_REPOSITORY, TaskRepository } from "../ports/task.repository.js";
-import { CreateTaskCommand, TaskData } from "../types/task.data.js";
-
+import { TASK_REPOSITORY, TaskRepository } from '../ports/task.repository.js';
+import { CreateTaskCommand, TaskData } from '../types/task.data.js';
 
 @Injectable()
 export class CreateTaskUseCase {

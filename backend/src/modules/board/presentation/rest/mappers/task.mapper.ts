@@ -7,6 +7,6 @@ export function mapTaskToResponse(task: TaskData): TaskResponseDTO {
         task.title,
         task.columnName,
         task?.description,
-        task.createdAt.toISOString()
+        task.createdAt.toISOString(),
     );
 }
