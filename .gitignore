@@ -10,4 +10,4 @@ backend/dist/
 backend/tsconfig.tsbuildinfo
 
 # secrets
-frontend/.env
+backend/.env
