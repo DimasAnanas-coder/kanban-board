@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Patch, ParseIntPipe } from '@nestjs/common';
 
 import {
     CreateTaskUseCase,
@@ -29,14 +29,18 @@ export class TaskController {
     ) {}
 
     @Get(':id')
-    async findById(@Param('id') id: number): Promise<TaskResponseDTO> {
+    async findById(
+        @Param('id', ParseIntPipe) id: number
+    ): Promise<TaskResponseDTO> {
         const task = await this.getTask.execute(id);
 
         return mapTaskToResponse(task);
     }
 
     @Post()
-    async create(@Body() request: CreateTaskRequestDTO): Promise<TaskResponseDTO> {
+    async create(
+        @Body() request: CreateTaskRequestDTO
+    ): Promise<TaskResponseDTO> {
         const task = await this.createTask.execute(mapCreateTaskRequestToInput(request));
 
         return mapTaskToResponse(task);
@@ -44,7 +48,7 @@ export class TaskController {
 
     @Patch(':id')
     async update(
-        @Param('id') id: number,
+        @Param('id', ParseIntPipe) id: number,
         @Body() request: UpdateTaskRequestDTO,
     ): Promise<TaskResponseDTO> {
         const task = await this.updateTask.execute(mapUpdateTaskRequestToInput(id, request));
@@ -54,7 +58,7 @@ export class TaskController {
 
     @Patch(':id/column')
     async move(
-        @Param('id') id: number,
+        @Param('id', ParseIntPipe) id: number,
         @Body() request: ChangeTaskColumnRequestDTO,
     ): Promise<TaskResponseDTO> {
         const task = await this.changeColumn.execute(

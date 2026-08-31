@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { TaskColumnName } from '../../../application/types/column.enum.js';
+import { IsEnum } from 'class-validator';
 
 export class ChangeTaskColumnRequestDTO {
-    @IsString()
-    @IsNotEmpty()
+    @IsEnum(TaskColumnName)
     columnName!: string;
 }

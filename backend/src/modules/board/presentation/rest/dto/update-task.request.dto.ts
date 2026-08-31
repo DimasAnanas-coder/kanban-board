@@ -1,8 +1,9 @@
-import { IsString, IsOptional } from 'class-validator';
+import { IsString, IsOptional, IsNotEmpty } from 'class-validator';
 
 export class UpdateTaskRequestDTO {
     @IsString()
     @IsOptional()
+    @IsNotEmpty()
     title?: string;
 
     @IsString()

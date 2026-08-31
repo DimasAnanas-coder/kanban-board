@@ -8,9 +8,10 @@ import {
     TaskData,
     UpdateTaskCommand,
 } from '../../application/types/task.data.js';
+import { TaskRepository } from '../../application/ports/task.repository.js';
 
 @Injectable()
-export class PrismaTaskRepository {
+export class PrismaTaskRepository implements TaskRepository {
     constructor(private prisma: PrismaService) {}
 
     async findById(id: number): Promise<TaskData | null> {
