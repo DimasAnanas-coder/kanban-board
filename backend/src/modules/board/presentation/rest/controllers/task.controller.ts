@@ -5,6 +5,7 @@ import {
     ChangeTaskColumnUseCase,
     GetTaskUseCase,
     UpdateTaskUseCase,
+    TaskListUseCase,
 } from '../../../application/use-cases/index.js';
 import {
     ChangeTaskColumnRequestDTO,
@@ -26,6 +27,7 @@ export class TaskController {
         private readonly getTask: GetTaskUseCase,
         private readonly updateTask: UpdateTaskUseCase,
         private readonly changeColumn: ChangeTaskColumnUseCase,
+        private readonly taskList: TaskListUseCase,
     ) {}
 
     @Get(':id')
@@ -66,5 +68,11 @@ export class TaskController {
         );
 
         return mapTaskToResponse(task);
+    }
+
+    @Get()
+    async findAll(): Promise<TaskResponseDTO[]> {
+        const tasks = await this.taskList.execute();
+        return tasks.map((task) => mapTaskToResponse(task));
     }
 }

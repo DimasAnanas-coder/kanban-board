@@ -7,6 +7,7 @@ import {
     GetTaskUseCase,
     UpdateTaskUseCase,
     ChangeTaskColumnUseCase,
+    TaskListUseCase
 } from './application/use-cases/index.js';
 import { PrismaTaskRepository } from './infrastructure/prisma/prisma-task.repository.js';
 import { TaskController } from './presentation/rest/controllers/task.controller.js';
@@ -20,6 +21,7 @@ import { ApplicationErrorFilter } from './presentation/rest/filters/application-
         GetTaskUseCase,
         UpdateTaskUseCase,
         ChangeTaskColumnUseCase,
+        TaskListUseCase,
         {
             provide: TASK_REPOSITORY,
             useClass: PrismaTaskRepository,

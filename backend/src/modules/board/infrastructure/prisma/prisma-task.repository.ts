@@ -62,6 +62,11 @@ export class PrismaTaskRepository implements TaskRepository {
         return this.toTaskData(task);
     }
 
+    async findAll(): Promise<TaskData[]> {
+        return this.prisma.task.findMany();
+    }
+
+
     private toTaskData(task: PrismaTask): TaskData {
         return {
             id: task.id,
