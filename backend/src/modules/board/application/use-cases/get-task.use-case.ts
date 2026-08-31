@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
 
+import { TaskNotFoundError } from '../errors/task-not-found.error.js';
 import { TASK_REPOSITORY, TaskRepository } from '../ports/task.repository.js';
 import { TaskData } from '../types/task.data.js';
-import { TaskNotFoundError } from '../errors/task-not-found.error.js';
 
 @Injectable()
 export class GetTaskUseCase {

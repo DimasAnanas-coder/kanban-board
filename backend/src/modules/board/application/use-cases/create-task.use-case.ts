@@ -11,6 +11,6 @@ export class CreateTaskUseCase {
     ) {}
 
     async execute(command: CreateTaskCommand): Promise<TaskData> {
-        return await this.tasks.createTask(command);
+        return this.tasks.createTask(command);
     }
 }

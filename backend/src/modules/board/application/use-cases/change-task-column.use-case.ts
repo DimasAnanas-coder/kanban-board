@@ -2,21 +2,21 @@ import { Injectable, Inject } from '@nestjs/common';
 
 import { TaskNotFoundError } from '../errors/task-not-found.error.js';
 import { TASK_REPOSITORY, TaskRepository } from '../ports/task.repository.js';
-import { UpdateTaskCommand, TaskData } from '../types/task.data.js';
+import { ChangeTaskColumnCommand, TaskData } from '../types/task.data.js';
 
 @Injectable()
-export class UpdateTaskUseCase {
+export class ChangeTaskColumnUseCase {
     constructor(
         @Inject(TASK_REPOSITORY)
         private readonly tasks: TaskRepository,
     ) {}
 
-    async execute(command: UpdateTaskCommand): Promise<TaskData> {
+    async execute(command: ChangeTaskColumnCommand): Promise<TaskData> {
         const oldTask = await this.tasks.findById(command.id);
         if (!oldTask) {
             throw new TaskNotFoundError(command.id);
         }
 
-        return this.tasks.updateTask(command);
+        return this.tasks.changeColumn(command);
     }
 }

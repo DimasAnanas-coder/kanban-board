@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 
 import { TASK_REPOSITORY } from './application/ports/task.repository.js';
+import {
+    CreateTaskUseCase,
+    GetTaskUseCase,
+    UpdateTaskUseCase,
+    ChangeTaskColumnUseCase,
+} from './application/use-cases/index.js';
 import { PrismaTaskRepository } from './infrastructure/prisma/prisma-task.repository.js';
-
-import { CreateTaskUseCase } from './application/use-cases/create-task.use-case.js';
-import { GetTaskUseCase } from './application/use-cases/get-task.use-case.js';
-import { UpdateTaskUseCase } from './application/use-cases/update-task.use-case.js';
-
 import { TaskController } from './presentation/rest/controllers/task.controller.js';
-
-import { APP_FILTER } from '@nestjs/core';
 import { ApplicationErrorFilter } from './presentation/rest/filters/application-error.filter.js';
 
 @Module({
@@ -19,14 +19,15 @@ import { ApplicationErrorFilter } from './presentation/rest/filters/application-
         CreateTaskUseCase,
         GetTaskUseCase,
         UpdateTaskUseCase,
+        ChangeTaskColumnUseCase,
         {
             provide: TASK_REPOSITORY,
             useClass: PrismaTaskRepository,
         },
         {
             provide: APP_FILTER,
-            useClass: ApplicationErrorFilter
-        }
+            useClass: ApplicationErrorFilter,
+        },
     ],
 })
 export class BoardModule {}
