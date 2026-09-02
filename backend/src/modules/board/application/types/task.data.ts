@@ -1,14 +1,17 @@
+import type { ColumnData } from './column.data.js';
+
 export interface TaskData {
     id: number;
     title: string;
     description: string | null;
-    columnName: string;
+    column: ColumnData;
     createdAt: Date;
 }
 
 export interface CreateTaskCommand {
     title: string;
     description?: string;
+    columnId: number;
 }
 
 export interface UpdateTaskCommand {
@@ -19,5 +22,5 @@ export interface UpdateTaskCommand {
 
 export interface ChangeTaskColumnCommand {
     id: number;
-    columnName: string;
+    columnId: number;
 }

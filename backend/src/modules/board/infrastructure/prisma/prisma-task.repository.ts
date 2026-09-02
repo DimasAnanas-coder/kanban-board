@@ -1,14 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import type { Task as PrismaTask } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 
+import { ColumnNotFoundError } from '../../application/errors/column-not-found.error.js';
+import { TaskNotFoundError } from '../../application/errors/task-not-found.error.js';
+import { TaskRepository } from '../../application/ports/task.repository.js';
 import {
     ChangeTaskColumnCommand,
     CreateTaskCommand,
     TaskData,
     UpdateTaskCommand,
 } from '../../application/types/task.data.js';
-import { TaskRepository } from '../../application/ports/task.repository.js';
+
+const taskInclude = { column: { select: { id: true, name: true, color: true } } } as const;
+
+type PrismaTaskWithColumn = Prisma.TaskGetPayload<{ include: typeof taskInclude }>;
 
 @Injectable()
 export class PrismaTaskRepository implements TaskRepository {
@@ -16,6 +22,7 @@ export class PrismaTaskRepository implements TaskRepository {
 
     async findById(id: number): Promise<TaskData | null> {
         const task = await this.prisma.task.findUnique({
+            include: taskInclude,
             where: {
                 id: id,
             },
@@ -25,18 +32,28 @@ export class PrismaTaskRepository implements TaskRepository {
     }
 
     async createTask(command: CreateTaskCommand): Promise<TaskData> {
-        const task = await this.prisma.task.create({
-            data: {
-                title: command.title,
-                description: command.description,
-            },
-        });
+        try {
+            const task = await this.prisma.task.create({
+                data: {
+                    title: command.title,
+                    description: command.description,
+                    columnId: command.columnId,
+                },
+                include: taskInclude,
+            });
 
-        return this.toTaskData(task);
+            return this.toTaskData(task);
+        } catch (error) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
+                throw new ColumnNotFoundError(command.columnId);
+            }
+            throw error;
+        }
     }
 
     async updateTask(command: UpdateTaskCommand): Promise<TaskData> {
         const task = await this.prisma.task.update({
+            include: taskInclude,
             where: {
                 id: command.id,
             },
@@ -50,38 +67,48 @@ export class PrismaTaskRepository implements TaskRepository {
     }
 
     async changeColumn(command: ChangeTaskColumnCommand): Promise<TaskData> {
-        const task = await this.prisma.task.update({
-            where: {
-                id: command.id,
-            },
-            data: {
-                columnName: command.columnName,
-            },
-        });
+        try {
+            const task = await this.prisma.task.update({
+                where: { id: command.id },
+                data: { columnId: command.columnId },
+                include: taskInclude,
+            });
 
-        return this.toTaskData(task);
+            return this.toTaskData(task);
+        } catch (error) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2003') {
+                    throw new ColumnNotFoundError(command.columnId);
+                }
+                if (error.code === 'P2025') {
+                    throw new TaskNotFoundError(command.id);
+                }
+            }
+            throw error;
+        }
     }
 
     async findAll(): Promise<TaskData[]> {
-        return this.prisma.task.findMany();
+        const tasks = await this.prisma.task.findMany({ include: taskInclude });
+        return tasks.map((task) => this.toTaskData(task));
     }
 
     async deleteTask(id: number): Promise<boolean> {
         const { count } = await this.prisma.task.deleteMany({
             where: {
-                id: id
-            }
-        })
+                id: id,
+            },
+        });
 
         return count > 0;
     }
 
-    private toTaskData(task: PrismaTask): TaskData {
+    private toTaskData(task: PrismaTaskWithColumn): TaskData {
         return {
             id: task.id,
             title: task.title,
             description: task.description,
-            columnName: task.columnName,
+            column: task.column,
             createdAt: task.createdAt,
         };
     }

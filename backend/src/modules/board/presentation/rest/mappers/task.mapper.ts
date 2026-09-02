@@ -15,7 +15,7 @@ export function mapTaskToResponse(task: TaskData): TaskResponseDTO {
     return new TaskResponseDTO(
         task.id,
         task.title,
-        task.columnName,
+        task.column.name,
         task?.description,
         task.createdAt.toISOString(),
     );
@@ -25,6 +25,7 @@ export function mapCreateTaskRequestToInput(request: CreateTaskRequestDTO): Crea
     return {
         title: request.title,
         description: request.description,
+        columnId: request.columnId,
     };
 }
 
@@ -45,6 +46,6 @@ export function mapChangeTaskColumnRequestToInput(
 ): ChangeTaskColumnCommand {
     return {
         id: id,
-        columnName: request.columnName,
+        columnId: request.columnId,
     };
 }
