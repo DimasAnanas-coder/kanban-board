@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body, Patch, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Patch, ParseIntPipe, Delete } from '@nestjs/common';
 
 import {
     CreateTaskUseCase,
@@ -6,6 +6,7 @@ import {
     GetTaskUseCase,
     UpdateTaskUseCase,
     TaskListUseCase,
+    DeleteTaskUseCase,
 } from '../../../application/use-cases/index.js';
 import {
     ChangeTaskColumnRequestDTO,
@@ -28,6 +29,7 @@ export class TaskController {
         private readonly updateTask: UpdateTaskUseCase,
         private readonly changeColumn: ChangeTaskColumnUseCase,
         private readonly taskList: TaskListUseCase,
+        private readonly deleteTask: DeleteTaskUseCase,
     ) {}
 
     @Get(':id')
@@ -74,5 +76,12 @@ export class TaskController {
     async findAll(): Promise<TaskResponseDTO[]> {
         const tasks = await this.taskList.execute();
         return tasks.map((task) => mapTaskToResponse(task));
+    }
+
+    @Delete(':id')
+    async deleteById(
+        @Param('id', ParseIntPipe) id: number
+    ): Promise<void> {
+        await this.deleteTask.execute(id);
     }
 }

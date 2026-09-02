@@ -66,6 +66,15 @@ export class PrismaTaskRepository implements TaskRepository {
         return this.prisma.task.findMany();
     }
 
+    async deleteTask(id: number): Promise<boolean> {
+        const { count } = await this.prisma.task.deleteMany({
+            where: {
+                id: id
+            }
+        })
+
+        return count > 0;
+    }
 
     private toTaskData(task: PrismaTask): TaskData {
         return {
