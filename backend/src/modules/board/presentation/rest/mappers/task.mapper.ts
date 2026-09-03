@@ -15,7 +15,7 @@ export function mapTaskToResponse(task: TaskData): TaskResponseDTO {
     return new TaskResponseDTO(
         task.id,
         task.title,
-        task.column.name,
+        task.column.id,
         task?.description,
         task.createdAt.toISOString(),
     );
