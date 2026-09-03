@@ -33,18 +33,14 @@ export class TaskController {
     ) {}
 
     @Get(':id')
-    async findById(
-        @Param('id', ParseIntPipe) id: number
-    ): Promise<TaskResponseDTO> {
+    async findById(@Param('id', ParseIntPipe) id: number): Promise<TaskResponseDTO> {
         const task = await this.getTask.execute(id);
 
         return mapTaskToResponse(task);
     }
 
     @Post()
-    async create(
-        @Body() request: CreateTaskRequestDTO
-    ): Promise<TaskResponseDTO> {
+    async create(@Body() request: CreateTaskRequestDTO): Promise<TaskResponseDTO> {
         const task = await this.createTask.execute(mapCreateTaskRequestToInput(request));
 
         return mapTaskToResponse(task);
@@ -79,9 +75,7 @@ export class TaskController {
     }
 
     @Delete(':id')
-    async deleteById(
-        @Param('id', ParseIntPipe) id: number
-    ): Promise<void> {
+    async deleteById(@Param('id', ParseIntPipe) id: number): Promise<void> {
         await this.deleteTask.execute(id);
     }
 }

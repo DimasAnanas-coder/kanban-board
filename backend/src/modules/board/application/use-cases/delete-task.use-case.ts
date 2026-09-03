@@ -11,7 +11,7 @@ export class DeleteTaskUseCase {
     ) {}
 
     async execute(id: number): Promise<void> {
-        if (! await this.tasks.deleteTask(id)) {
+        if (!(await this.tasks.deleteTask(id))) {
             throw new TaskNotFoundError(id);
         }
     }

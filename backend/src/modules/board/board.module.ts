@@ -44,7 +44,7 @@ import { ApplicationErrorFilter } from './presentation/rest/filters/application-
             provide: COLUMN_REPOSITORY,
             useClass: PrismaColumnRepository,
         },
-        
+
         {
             provide: APP_FILTER,
             useClass: ApplicationErrorFilter,

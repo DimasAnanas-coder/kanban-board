@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 
+import { EmptyTaskUpdateError } from '../errors/empty-task-update.error.js';
 import { TaskNotFoundError } from '../errors/task-not-found.error.js';
 import { TASK_REPOSITORY, TaskRepository } from '../ports/task.repository.js';
 import { UpdateTaskCommand, TaskData } from '../types/task.data.js';
-import { EmptyTaskUpdateError } from '../errors/empty-task-update.error.js';
 
 @Injectable()
 export class UpdateTaskUseCase {
@@ -13,10 +13,7 @@ export class UpdateTaskUseCase {
     ) {}
 
     async execute(command: UpdateTaskCommand): Promise<TaskData> {
-        if (
-            command.description === undefined &&
-            command.title === undefined
-        ) {
+        if (command.description === undefined && command.title === undefined) {
             throw new EmptyTaskUpdateError();
         }
 
