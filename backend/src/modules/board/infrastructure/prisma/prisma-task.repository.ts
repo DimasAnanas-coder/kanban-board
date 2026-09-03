@@ -58,8 +58,8 @@ export class PrismaTaskRepository implements TaskRepository {
                 id: command.id,
             },
             data: {
-                ...(command.title && { title: command.title }),
-                ...(command.description && { description: command.description }),
+                ...(command.title != undefined && { title: command.title }),
+                ...(command.description != undefined && { description: command.description }),
             },
         });
 
