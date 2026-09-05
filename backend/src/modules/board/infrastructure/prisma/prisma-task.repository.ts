@@ -6,7 +6,7 @@ import { ColumnNotFoundError } from '../../application/errors/column-not-found.e
 import { TaskNotFoundError } from '../../application/errors/task-not-found.error.js';
 import { TaskRepository } from '../../application/ports/task.repository.js';
 import {
-    ChangeTaskColumnCommand,
+    MoveTaskCommand,
     CreateTaskCommand,
     TaskData,
     UpdateTaskCommand,
@@ -63,7 +63,7 @@ export class PrismaTaskRepository extends PrismaRepository implements TaskReposi
         return this.toTaskData(task);
     }
 
-    async changeColumn(command: ChangeTaskColumnCommand): Promise<TaskData> {
+    async changeColumn(command: MoveTaskCommand): Promise<TaskData> {
         try {
             const task = await this.service.task.update({
                 where: { id: command.id },

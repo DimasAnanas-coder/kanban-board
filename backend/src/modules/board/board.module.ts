@@ -8,7 +8,7 @@ import {
     CreateTaskUseCase,
     GetTaskUseCase,
     UpdateTaskUseCase,
-    ChangeTaskColumnUseCase,
+    MoveTaskUseCase,
     TaskListUseCase,
     DeleteTaskUseCase,
     ColumnListUseCase,
@@ -32,7 +32,7 @@ import { ApplicationErrorFilter } from './presentation/rest/filters/application-
         CreateTaskUseCase,
         GetTaskUseCase,
         UpdateTaskUseCase,
-        ChangeTaskColumnUseCase,
+        MoveTaskUseCase,
         TaskListUseCase,
         DeleteTaskUseCase,
         {

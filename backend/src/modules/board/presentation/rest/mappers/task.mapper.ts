@@ -1,5 +1,5 @@
 import type {
-    ChangeTaskColumnCommand,
+    MoveTaskCommand,
     CreateTaskCommand,
     TaskData,
     UpdateTaskCommand,
@@ -8,7 +8,7 @@ import {
     type CreateTaskRequestDTO,
     TaskResponseDTO,
     type UpdateTaskRequestDTO,
-    type ChangeTaskColumnRequestDTO,
+    type MoveTaskRequestDTO,
 } from '../dto/index.js';
 
 export function mapTaskToResponse(task: TaskData): TaskResponseDTO {
@@ -40,10 +40,10 @@ export function mapUpdateTaskRequestToInput(
     };
 }
 
-export function mapChangeTaskColumnRequestToInput(
+export function mapMoveTaskRequestToInput(
     id: number,
-    request: ChangeTaskColumnRequestDTO,
-): ChangeTaskColumnCommand {
+    request: MoveTaskRequestDTO,
+): MoveTaskCommand {
     return {
         id: id,
         columnId: request.columnId,

@@ -2,14 +2,14 @@ import { Controller, Get, Post, Param, Body, Patch, ParseIntPipe, Delete } from 
 
 import {
     CreateTaskUseCase,
-    ChangeTaskColumnUseCase,
+    MoveTaskUseCase,
     GetTaskUseCase,
     UpdateTaskUseCase,
     TaskListUseCase,
     DeleteTaskUseCase,
 } from '../../../application/use-cases/index.js';
 import {
-    ChangeTaskColumnRequestDTO,
+    MoveTaskRequestDTO,
     CreateTaskRequestDTO,
     TaskResponseDTO,
     UpdateTaskRequestDTO,
@@ -18,7 +18,7 @@ import {
     mapCreateTaskRequestToInput,
     mapTaskToResponse,
     mapUpdateTaskRequestToInput,
-    mapChangeTaskColumnRequestToInput,
+    mapMoveTaskRequestToInput,
 } from '../mappers/task.mapper.js';
 
 @Controller('task')
@@ -27,7 +27,7 @@ export class TaskController {
         private readonly createTask: CreateTaskUseCase,
         private readonly getTask: GetTaskUseCase,
         private readonly updateTask: UpdateTaskUseCase,
-        private readonly changeColumn: ChangeTaskColumnUseCase,
+        private readonly moveTask: MoveTaskUseCase,
         private readonly taskList: TaskListUseCase,
         private readonly deleteTask: DeleteTaskUseCase,
     ) {}
@@ -59,10 +59,10 @@ export class TaskController {
     @Patch(':id/column')
     async move(
         @Param('id', ParseIntPipe) id: number,
-        @Body() request: ChangeTaskColumnRequestDTO,
+        @Body() request: MoveTaskRequestDTO,
     ): Promise<TaskResponseDTO> {
-        const task = await this.changeColumn.execute(
-            mapChangeTaskColumnRequestToInput(id, request),
+        const task = await this.moveTask.execute(
+            mapMoveTaskRequestToInput(id, request),
         );
 
         return mapTaskToResponse(task);

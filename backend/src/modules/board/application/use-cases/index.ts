@@ -1,4 +1,4 @@
-export { ChangeTaskColumnUseCase } from './change-task-column.use-case.js';
+export { MoveTaskUseCase } from './move-task.use-case.js';
 export { CreateTaskUseCase } from './create-task.use-case.js';
 export { DeleteTaskUseCase } from './delete-task.use-case.js';
 export { GetTaskUseCase } from './get-task.use-case.js';

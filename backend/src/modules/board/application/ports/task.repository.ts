@@ -1,5 +1,5 @@
 import {
-    type ChangeTaskColumnCommand,
+    type MoveTaskCommand,
     type UpdateTaskCommand,
     type CreateTaskCommand,
     type TaskData,
@@ -11,7 +11,7 @@ export interface TaskRepository {
     findById(id: number): Promise<TaskData | null>;
     createTask(command: CreateTaskCommand): Promise<TaskData>;
     updateTask(command: UpdateTaskCommand): Promise<TaskData>;
-    changeColumn(command: ChangeTaskColumnCommand): Promise<TaskData>;
+    changeColumn(command: MoveTaskCommand): Promise<TaskData>;
     findAll(): Promise<TaskData[]>;
     deleteTask(id: number): Promise<boolean>;
     countByColumnId(columnId: number): Promise<number>;

@@ -18,7 +18,7 @@ export interface UpdateTaskCommand {
     description?: string;
 }
 
-export interface ChangeTaskColumnCommand {
+export interface MoveTaskCommand {
     id: number;
     columnId: number;
 }
