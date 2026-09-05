@@ -2,29 +2,36 @@ import { Injectable, Inject } from '@nestjs/common';
 
 import { ColumnNotFoundError } from '../errors/column-not-found.error.js';
 import { TaskNotFoundError } from '../errors/task-not-found.error.js';
-import { COLUMN_REPOSITORY, type ColumnRepository } from '../ports/column.repository.js';
-import { TASK_REPOSITORY, TaskRepository } from '../ports/task.repository.js';
+import { ColumnCapacityExceededError } from '../errors/column-capacity-exceeded.error copy.js';
+
 import { MoveTaskCommand, TaskData } from '../types/task.data.js';
+import { UNIT_OF_WORK, UnitOfWork } from '../ports/unit-of-work.js';
+import { COLUMN_CAPACITY } from '../config.js';
 
 @Injectable()
 export class MoveTaskUseCase {
     constructor(
-        @Inject(TASK_REPOSITORY)
-        private readonly tasks: TaskRepository,
-        @Inject(COLUMN_REPOSITORY)
-        private readonly columns: ColumnRepository,
+        @Inject(UNIT_OF_WORK)
+        private readonly uow: UnitOfWork
     ) {}
 
     async execute(command: MoveTaskCommand): Promise<TaskData> {
-        const oldTask = await this.tasks.findById(command.id);
-        if (!oldTask) {
-            throw new TaskNotFoundError(command.id);
-        }
+        return this.uow.execute(async ({tasks, columns}) => {
+            const oldTask = await tasks.findById(command.id);
+            if (!oldTask) {
+                throw new TaskNotFoundError(command.id);
+            }
+            
+            const oldColumn = await columns.findById(command.columnId);
+            if (!oldColumn) {
+                throw new ColumnNotFoundError(command.columnId);
+            }
 
-        if (!(await this.columns.findById(command.columnId))) {
-            throw new ColumnNotFoundError(command.columnId);
-        }
+            if (await tasks.countByColumnId(command.columnId) >= COLUMN_CAPACITY) {
+                throw new ColumnCapacityExceededError();
+            }
 
-        return this.tasks.changeColumn(command);
+            return tasks.changeColumn(command);
+        })
     }
 }
