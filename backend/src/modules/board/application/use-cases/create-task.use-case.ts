@@ -1,7 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 
-import { ColumnNotFoundError } from '../errors/column-not-found.error.js';
-import { ColumnCapacityExceededError } from '../errors/column-capacity-exceeded.error copy.js';
+import { 
+    ColumnNotFoundError, 
+    ColumnCapacityExceededError 
+} from '../errors/index.js';
 
 import { UNIT_OF_WORK, UnitOfWork } from '../ports/unit-of-work.js';
 import { CreateTaskCommand, TaskData } from '../types/task.data.js';

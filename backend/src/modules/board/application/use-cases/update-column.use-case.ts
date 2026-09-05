@@ -1,7 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 
-import { ColumnNotFoundError } from '../errors/column-not-found.error.js';
-import { EmptyColumnUpdateError } from '../errors/empty-column-update.error.js';
+import { 
+    ColumnNotFoundError, 
+    EmptyColumnUpdateError 
+} from '../errors/index.js';
 import { COLUMN_REPOSITORY, type ColumnRepository } from '../ports/column.repository.js';
 import type { ColumnData, UpdateColumnCommand } from '../types/column.data.js';
 

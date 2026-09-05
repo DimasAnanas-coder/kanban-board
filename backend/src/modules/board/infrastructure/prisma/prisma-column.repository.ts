@@ -2,9 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { Prisma, Column as PrismaColumn } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 
-import { ColumnNameConflictError } from '../../application/errors/column-name-conflict.error.js';
-import { ColumnNotEmptyError } from '../../application/errors/column-not-empty.error.js';
-import { ColumnNotFoundError } from '../../application/errors/column-not-found.error.js';
+import { 
+    ColumnNameConflictError, 
+    ColumnNotEmptyError,
+    ColumnNotFoundError 
+} from '../../application/errors/index.js';
 import type { ColumnRepository } from '../../application/ports/column.repository.js';
 import type {
     ColumnData,

@@ -1,7 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 
-import { EmptyTaskUpdateError } from '../errors/empty-task-update.error.js';
-import { TaskNotFoundError } from '../errors/task-not-found.error.js';
+import { 
+    EmptyTaskUpdateError,
+    TaskNotFoundError 
+} from '../errors/index.js';
 import { TASK_REPOSITORY, TaskRepository } from '../ports/task.repository.js';
 import { UpdateTaskCommand, TaskData } from '../types/task.data.js';
 

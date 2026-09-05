@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 
-import { ColumnNotFoundError } from '../errors/column-not-found.error.js';
+import { ColumnNotFoundError } from '../errors/index.js';
+
 import { COLUMN_REPOSITORY, type ColumnRepository } from '../ports/column.repository.js';
 
 @Injectable()

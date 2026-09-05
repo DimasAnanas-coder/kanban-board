@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Prisma, Task as PrismaTask } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 
-import { ColumnNotFoundError } from '../../application/errors/column-not-found.error.js';
-import { TaskNotFoundError } from '../../application/errors/task-not-found.error.js';
+import { 
+    ColumnNotFoundError,
+    TaskNotFoundError 
+} from '../../application/errors/index.js';
 import { TaskRepository } from '../../application/ports/task.repository.js';
 import {
     MoveTaskCommand,
