@@ -1,24 +1,32 @@
 import { Injectable, Inject } from '@nestjs/common';
 
 import { ColumnNotFoundError } from '../errors/column-not-found.error.js';
-import { COLUMN_REPOSITORY, type ColumnRepository } from '../ports/column.repository.js';
-import { TASK_REPOSITORY, TaskRepository } from '../ports/task.repository.js';
+import { ColumnCapacityExceededError } from '../errors/column-capacity-exceeded.error copy.js';
+
+import { UNIT_OF_WORK, UnitOfWork } from '../ports/unit-of-work.js';
 import { CreateTaskCommand, TaskData } from '../types/task.data.js';
+import { COLUMN_CAPACITY } from '../config.js';
 
 @Injectable()
 export class CreateTaskUseCase {
     constructor(
-        @Inject(TASK_REPOSITORY)
-        private readonly tasks: TaskRepository,
-        @Inject(COLUMN_REPOSITORY)
-        private readonly columns: ColumnRepository,
+        @Inject(UNIT_OF_WORK)
+        private readonly uow: UnitOfWork,
     ) {}
 
     async execute(command: CreateTaskCommand): Promise<TaskData> {
-        if (!(await this.columns.findById(command.columnId))) {
-            throw new ColumnNotFoundError(command.columnId);
-        }
+        return this.uow.execute(async ({tasks, columns}) => {
+            const column = await columns.findById(command.columnId);
+            if (!column) {
+                throw new ColumnNotFoundError(command.columnId);
+            }
 
-        return this.tasks.createTask(command);
+            if (await tasks.countByColumnId(column.id) >= COLUMN_CAPACITY) {
+                throw new ColumnCapacityExceededError();
+            }
+
+            return tasks.createTask(command);
+        })
+        
     }
 }
