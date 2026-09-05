@@ -1,10 +1,8 @@
-import type { ColumnData } from './column.data.js';
-
 export interface TaskData {
     id: number;
     title: string;
     description: string | null;
-    column: ColumnData;
+    columnId: number;
     createdAt: Date;
 }
 

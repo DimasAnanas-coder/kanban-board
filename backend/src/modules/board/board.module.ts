@@ -3,6 +3,7 @@ import { APP_FILTER } from '@nestjs/core';
 
 import { COLUMN_REPOSITORY } from './application/ports/column.repository.js';
 import { TASK_REPOSITORY } from './application/ports/task.repository.js';
+import { UNIT_OF_WORK } from './application/ports/unit-of-work.js';
 import {
     CreateTaskUseCase,
     GetTaskUseCase,
@@ -17,9 +18,12 @@ import {
 } from './application/use-cases/index.js';
 import { PrismaColumnRepository } from './infrastructure/prisma/prisma-column.repository.js';
 import { PrismaTaskRepository } from './infrastructure/prisma/prisma-task.repository.js';
+import { PrismaUnitOfWork } from './infrastructure/prisma/prisma-unit-of-work.js';
+
 import { ColumnController } from './presentation/rest/controllers/column.controller.js';
 import { TaskController } from './presentation/rest/controllers/task.controller.js';
 import { ApplicationErrorFilter } from './presentation/rest/filters/application-error.filter.js';
+
 
 @Module({
     imports: [],
@@ -43,6 +47,11 @@ import { ApplicationErrorFilter } from './presentation/rest/filters/application-
         {
             provide: COLUMN_REPOSITORY,
             useClass: PrismaColumnRepository,
+        },
+
+        {
+            provide: UNIT_OF_WORK,
+            useClass: PrismaUnitOfWork,
         },
 
         {

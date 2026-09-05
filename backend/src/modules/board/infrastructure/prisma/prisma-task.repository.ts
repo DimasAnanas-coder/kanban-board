@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, Task as PrismaTask } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 
 import { ColumnNotFoundError } from '../../application/errors/column-not-found.error.js';
@@ -11,18 +11,17 @@ import {
     TaskData,
     UpdateTaskCommand,
 } from '../../application/types/task.data.js';
+import { PrismaRepository } from './prisma.repository.js';
 
-const taskInclude = { column: { select: { id: true, name: true, color: true } } } as const;
-
-type PrismaTaskWithColumn = Prisma.TaskGetPayload<{ include: typeof taskInclude }>;
 
 @Injectable()
-export class PrismaTaskRepository implements TaskRepository {
-    constructor(private prisma: PrismaService) {}
+export class PrismaTaskRepository extends PrismaRepository implements TaskRepository {
+    constructor(prisma: PrismaService) {
+        super(prisma);
+    }
 
     async findById(id: number): Promise<TaskData | null> {
-        const task = await this.prisma.task.findUnique({
-            include: taskInclude,
+        const task = await this.service.task.findUnique({
             where: {
                 id: id,
             },
@@ -33,13 +32,12 @@ export class PrismaTaskRepository implements TaskRepository {
 
     async createTask(command: CreateTaskCommand): Promise<TaskData> {
         try {
-            const task = await this.prisma.task.create({
+            const task = await this.service.task.create({
                 data: {
                     title: command.title,
                     description: command.description,
                     columnId: command.columnId,
                 },
-                include: taskInclude,
             });
 
             return this.toTaskData(task);
@@ -52,8 +50,7 @@ export class PrismaTaskRepository implements TaskRepository {
     }
 
     async updateTask(command: UpdateTaskCommand): Promise<TaskData> {
-        const task = await this.prisma.task.update({
-            include: taskInclude,
+        const task = await this.service.task.update({
             where: {
                 id: command.id,
             },
@@ -68,10 +65,9 @@ export class PrismaTaskRepository implements TaskRepository {
 
     async changeColumn(command: ChangeTaskColumnCommand): Promise<TaskData> {
         try {
-            const task = await this.prisma.task.update({
+            const task = await this.service.task.update({
                 where: { id: command.id },
                 data: { columnId: command.columnId },
-                include: taskInclude,
             });
 
             return this.toTaskData(task);
@@ -89,12 +85,12 @@ export class PrismaTaskRepository implements TaskRepository {
     }
 
     async findAll(): Promise<TaskData[]> {
-        const tasks = await this.prisma.task.findMany({ include: taskInclude });
+        const tasks = await this.service.task.findMany();
         return tasks.map((task) => this.toTaskData(task));
     }
 
     async deleteTask(id: number): Promise<boolean> {
-        const { count } = await this.prisma.task.deleteMany({
+        const { count } = await this.service.task.deleteMany({
             where: {
                 id: id,
             },
@@ -103,12 +99,22 @@ export class PrismaTaskRepository implements TaskRepository {
         return count > 0;
     }
 
-    private toTaskData(task: PrismaTaskWithColumn): TaskData {
+    async countByColumnId(columnId: number): Promise<number> {
+        const count = await this.service.task.count({
+            where: {
+                columnId: columnId,
+            },
+        });
+        return count;
+    }
+
+
+    private toTaskData(task: PrismaTask): TaskData {
         return {
             id: task.id,
             title: task.title,
             description: task.description,
-            column: task.column,
+            columnId: task.columnId,
             createdAt: task.createdAt,
         };
     }

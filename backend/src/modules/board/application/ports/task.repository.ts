@@ -14,4 +14,5 @@ export interface TaskRepository {
     changeColumn(command: ChangeTaskColumnCommand): Promise<TaskData>;
     findAll(): Promise<TaskData[]>;
     deleteTask(id: number): Promise<boolean>;
+    countByColumnId(columnId: number): Promise<number>;
 }

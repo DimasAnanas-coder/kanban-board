@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, Column as PrismaColumn } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 
 import { ColumnNameConflictError } from '../../application/errors/column-name-conflict.error.js';
@@ -11,27 +11,36 @@ import type {
     CreateColumnCommand,
     UpdateColumnCommand,
 } from '../../application/types/column.data.js';
+import { PrismaRepository } from './prisma.repository.js';
 
-const columnSelect = { id: true, name: true, color: true } as const;
 
 @Injectable()
-export class PrismaColumnRepository implements ColumnRepository {
-    constructor(private prisma: PrismaService) {}
-
+export class PrismaColumnRepository extends PrismaRepository implements ColumnRepository {
+    constructor(prisma: PrismaService) {
+        super(prisma);
+    }
+    
     async findById(id: number): Promise<ColumnData | null> {
-        return this.prisma.column.findUnique({ where: { id }, select: columnSelect });
+        const column = await this.service.column.findUnique({ 
+            where: { id }
+        });
+        return column ? this.toColumnData(column) : null;
     }
 
     async findAll(): Promise<ColumnData[]> {
-        return this.prisma.column.findMany({ select: columnSelect, orderBy: { id: 'asc' } });
+        const columns = await this.service.column.findMany();
+        return columns.map((column) => this.toColumnData(column));
     }
 
     async createColumn(command: CreateColumnCommand): Promise<ColumnData> {
         try {
-            return await this.prisma.column.create({
-                data: { name: command.name, color: command.color },
-                select: columnSelect,
+            const column = await this.service.column.create({
+                data: { 
+                    name: command.name, 
+                    color: command.color 
+                },
             });
+            return this.toColumnData(column);
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
                 throw new ColumnNameConflictError();
@@ -42,11 +51,14 @@ export class PrismaColumnRepository implements ColumnRepository {
 
     async updateColumn(command: UpdateColumnCommand): Promise<ColumnData> {
         try {
-            return await this.prisma.column.update({
+            const column = await this.service.column.update({
                 where: { id: command.id },
-                data: { name: command.name, color: command.color },
-                select: columnSelect,
+                data: { 
+                    name: command.name, 
+                    color: command.color 
+                },
             });
+            return this.toColumnData(column);
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
                 if (error.code === 'P2002') {
@@ -62,7 +74,10 @@ export class PrismaColumnRepository implements ColumnRepository {
 
     async deleteColumn(id: number): Promise<boolean> {
         try {
-            const { count } = await this.prisma.column.deleteMany({ where: { id } });
+            const { count } = await this.service.column.deleteMany({ 
+                where: { id } 
+            });
+
             return count > 0;
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
@@ -70,5 +85,13 @@ export class PrismaColumnRepository implements ColumnRepository {
             }
             throw error;
         }
+    }
+
+    private toColumnData(column: PrismaColumn): ColumnData {
+        return {
+            id: column.id,
+            name: column.name,
+            color: column.color,
+        };
     }
 }
