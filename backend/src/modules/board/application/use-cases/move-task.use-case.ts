@@ -3,7 +3,8 @@ import { Injectable, Inject } from '@nestjs/common';
 import { 
     ColumnNotFoundError,
     TaskNotFoundError,
-    ColumnCapacityExceededError 
+    ColumnCapacityExceededError,
+    TaskAlreadyInColumnError
 } from '../errors/index.js';
 
 import { MoveTaskCommand, TaskData } from '../types/task.data.js';
@@ -22,6 +23,10 @@ export class MoveTaskUseCase {
             const oldTask = await tasks.findById(command.id);
             if (!oldTask) {
                 throw new TaskNotFoundError(command.id);
+            }
+
+            if (oldTask.columnId === command.columnId) {
+                throw new TaskAlreadyInColumnError();
             }
             
             const oldColumn = await columns.findById(command.columnId);

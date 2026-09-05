@@ -9,4 +9,5 @@ export const HTTP_STATUS_BY_ERROR_KIND: Record<ApplicationErrorKind, HttpStatus>
     'conflict': HttpStatus.CONFLICT,
     'forbidden': HttpStatus.FORBIDDEN,
     'unauthorized': HttpStatus.UNAUTHORIZED,
+    'internal_server_error': HttpStatus.INTERNAL_SERVER_ERROR,
 };

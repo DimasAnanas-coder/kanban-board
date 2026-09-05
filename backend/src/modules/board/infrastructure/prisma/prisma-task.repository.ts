@@ -4,6 +4,7 @@ import { PrismaService } from 'nestjs-prisma';
 
 import { 
     ColumnNotFoundError,
+    DatabaseError,
     TaskNotFoundError 
 } from '../../application/errors/index.js';
 import { TaskRepository } from '../../application/ports/task.repository.js';
@@ -47,7 +48,7 @@ export class PrismaTaskRepository extends PrismaRepository implements TaskReposi
             if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
                 throw new ColumnNotFoundError(command.columnId);
             }
-            throw error;
+            throw new DatabaseError();
         }
     }
 
@@ -82,7 +83,7 @@ export class PrismaTaskRepository extends PrismaRepository implements TaskReposi
                     throw new TaskNotFoundError(command.id);
                 }
             }
-            throw error;
+            throw new DatabaseError();
         }
     }
 

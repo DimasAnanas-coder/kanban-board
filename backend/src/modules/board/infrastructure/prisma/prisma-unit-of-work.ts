@@ -32,22 +32,17 @@ export class PrismaUnitOfWork implements UnitOfWork {
         ): Promise<T> => {
             const repos = Object.values(repositories) as PrismaRepository[];
 
-            console.log('🔵 Устанавливаем tx');
             repos.forEach((repo) => {
                 repo.tx = tx;
             });
-            console.log('🔵 tx установлено');
 
             try {
-                console.log('🟡 Выполняем fn');
                 const result = await fn(repositories);
-                console.log('🟢 fn завершена успешно');
                 return result;
             } finally {
                 repos.forEach((repo) => {
                     repo.tx = null;
                 });
-                console.log('🟢 tx сброшен');
             }
         }
 

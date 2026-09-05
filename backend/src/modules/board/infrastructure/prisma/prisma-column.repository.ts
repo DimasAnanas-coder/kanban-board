@@ -5,7 +5,8 @@ import { PrismaService } from 'nestjs-prisma';
 import { 
     ColumnNameConflictError, 
     ColumnNotEmptyError,
-    ColumnNotFoundError 
+    ColumnNotFoundError,
+    DatabaseError,
 } from '../../application/errors/index.js';
 import type { ColumnRepository } from '../../application/ports/column.repository.js';
 import type {
@@ -47,7 +48,7 @@ export class PrismaColumnRepository extends PrismaRepository implements ColumnRe
             if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
                 throw new ColumnNameConflictError();
             }
-            throw error;
+            throw new DatabaseError();
         }
     }
 
@@ -70,7 +71,7 @@ export class PrismaColumnRepository extends PrismaRepository implements ColumnRe
                     throw new ColumnNotFoundError(command.id);
                 }
             }
-            throw error;
+            throw new DatabaseError();
         }
     }
 
@@ -85,7 +86,7 @@ export class PrismaColumnRepository extends PrismaRepository implements ColumnRe
             if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
                 throw new ColumnNotEmptyError(id);
             }
-            throw error;
+            throw new DatabaseError();
         }
     }
 

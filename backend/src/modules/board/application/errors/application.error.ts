@@ -1,5 +1,11 @@
 export type ApplicationErrorKind =
-    'not_found' | 'bad_request' | 'validation' | 'conflict' | 'forbidden' | 'unauthorized';
+    | 'not_found' 
+    | 'bad_request' 
+    | 'validation' 
+    | 'conflict' 
+    | 'forbidden' 
+    | 'unauthorized' 
+    | 'internal_server_error';
 
 export abstract class ApplicationError extends Error {
     constructor(
