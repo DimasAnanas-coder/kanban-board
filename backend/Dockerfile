@@ -6,5 +6,5 @@ RUN npm ci
 COPY . .
 EXPOSE 3010
 
-RUN npm run build
+RUN npm run db:generate && npm run build
 CMD ["npm", "run", "start"]

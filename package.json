@@ -2,7 +2,7 @@
   "name": "kanban-board",
   "private": true,
   "scripts": {
-    "dev:up":   "docker compose -f backend/docker-compose.yml -f frontend/docker-compose.dev.yml up --build",
+    "dev:up":   "docker compose -f backend/docker-compose.yml -f frontend/docker-compose.dev.yml up -d --build",
     "dev:down": "docker compose -f backend/docker-compose.yml -f frontend/docker-compose.dev.yml down",
     "dev:logs": "docker compose -f backend/docker-compose.yml -f frontend/docker-compose.dev.yml logs -f"
   }
