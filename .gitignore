@@ -11,3 +11,4 @@ backend/tsconfig.tsbuildinfo
 
 # secrets
 backend/.env
+frontend/.env
