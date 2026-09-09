@@ -11,10 +11,13 @@ export function useColumns() {
         setData: setColumns,
         loading: columnsLoading,
         error: columnsError,
-        execute: fetchColumns,
+        execute: fetchColumns
     } = useApi(
         () => columnService.getAll(),
-        { immediate: true }
+        { 
+            immediate: true,
+            initialData: [], 
+        }
     );
 
     return {

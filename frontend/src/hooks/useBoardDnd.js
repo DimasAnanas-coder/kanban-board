@@ -5,11 +5,10 @@ import {
     useSensor,
     useSensors,
 } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
 
 import findTask from '../utils/findTask';
 
-export function useBoardDnd(tasks, setTasks) {
+export function useBoardDnd(tasks, handleMoveTask, setTasks) {
     const [activeId, setActiveId] = useState(null);
 
     const sensors = useSensors(
@@ -21,7 +20,10 @@ export function useBoardDnd(tasks, setTasks) {
     );
 
     const handleDragStart = useCallback((event) => {
-        setActiveId(event.active.id);
+        const taskId = event.active.data.current?.taskId;
+        setActiveId(
+            Number.isInteger(taskId) ? taskId : null
+        );
     }, []);
 
     const handleDragOver = useCallback((event) => {
@@ -32,26 +34,23 @@ export function useBoardDnd(tasks, setTasks) {
         }
 
         setTasks((prevTasks) => {
-            const activeTask = findTask(prevTasks, active.id);
-
+            const activeTaskId = active.data.current?.taskId || null;
+            const activeTask = activeTaskId ? findTask(prevTasks, activeTaskId) : null;
             if (!activeTask) {
                 return prevTasks;
             }
 
-            const overTask = findTask(prevTasks, over.id);
-            const overColumn = overTask
-                ? overTask.column
-                : over.id;
+            const overColumnId =  over.data.current?.columnId || null;
 
-            if (activeTask.column === overColumn) {
-                return prevTasks;
+            if (overColumnId !== activeTask.columnId) {
+                return prevTasks.map((task) => (
+                    task.id === activeTaskId
+                        ? { ...task, columnId: overColumnId }
+                        : task
+                ));
             }
 
-            return prevTasks.map((task) => (
-                task.id === active.id
-                    ? { ...task, column: overColumn }
-                    : task
-            ));
+            return prevTasks;
         });
     }, [setTasks]);
 
@@ -64,52 +63,8 @@ export function useBoardDnd(tasks, setTasks) {
             return;
         }
 
-        setTasks((prevTasks) => {
-            const activeTask = findTask(prevTasks, active.id);
-            const overTask = findTask(prevTasks, over.id);
-
-            if (
-                !activeTask
-                || !overTask
-                || activeTask.column !== overTask.column
-            ) {
-                return prevTasks;
-            }
-
-            const columnTasks = prevTasks.filter(
-                (task) => task.column === activeTask.column,
-            );
-
-            const oldIndex = columnTasks.findIndex(
-                (task) => task.id === active.id,
-            );
-            const newIndex = columnTasks.findIndex(
-                (task) => task.id === over.id,
-            );
-
-            if (
-                oldIndex === -1
-                || newIndex === -1
-                || oldIndex === newIndex
-            ) {
-                return prevTasks;
-            }
-
-            const reorderedTasks = arrayMove(
-                columnTasks,
-                oldIndex,
-                newIndex,
-            );
-
-            let reorderedIndex = 0;
-
-            return prevTasks.map((task) => (
-                task.column === activeTask.column
-                    ? reorderedTasks[reorderedIndex++]
-                    : task
-            ));
-        });
-    }, [setTasks]);
+        handleMoveTask(active.data.current?.taskId, over.data.current?.columnId);
+    }, [setTasks, handleMoveTask]);
 
     return {
         activeTask: findTask(tasks, activeId),

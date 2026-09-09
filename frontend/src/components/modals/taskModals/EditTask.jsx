@@ -4,6 +4,7 @@ import { FormActions } from '../forms';
 import { useTaskForm } from '../../../hooks/useTaskForm';
 
 export default function EditTask({
+    columns, 
     isOpen,
     task,
     onClose,
@@ -11,6 +12,7 @@ export default function EditTask({
     showAlert,
 }) {
     const { title, setTitle, description, setDescription, handleSubmit } = useTaskForm(
+        columns,
         task,
         onEditTask,
         onClose,

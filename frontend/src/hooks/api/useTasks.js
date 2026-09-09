@@ -11,14 +11,17 @@ export function useTasks() {
         setData: setTasks,
         loading: tasksLoading,
         error: tasksError,
-        execute: fetchTasks,
+        execute: fetchTasks
     } = useApi(
         () => taskService.getAll(), 
-        { immediate: true }
+        { 
+            immediate: true,
+            initialData: [],
+        }
     );
     
     const {
-        execute: createTask,
+        execute: createTaskRequest,
         loading: createLoading,
         error: createError,
     } = useApi(
@@ -27,7 +30,7 @@ export function useTasks() {
     );
 
     const {
-        execute: updateTask,
+        execute: updateTaskRequest,
         loading: updateLoading,
         error: updateError,
     } = useApi(
@@ -36,7 +39,7 @@ export function useTasks() {
     );
 
     const {
-        execute: deleteTask,
+        execute: deleteTaskRequest,
         loading: deleteLoading,
         error: deleteError,
     } = useApi(
@@ -45,7 +48,7 @@ export function useTasks() {
     );
 
     const {
-        execute: moveTask,
+        execute: moveTaskRequest,
         loading: moveLoading,
         error: moveError,
     } = useApi(
@@ -53,6 +56,30 @@ export function useTasks() {
             taskService.move(taskId, targetColumnId),
         { immediate: false }
     );
+
+
+    const createTask = async (taskData) => {
+        const createdTask = await createTaskRequest(taskData);
+        setTasks(prevTasks => [...prevTasks, createdTask]);
+        return createdTask;
+    }
+
+    const updateTask = async ({ id, taskData }) => {
+        const updatedTask = await updateTaskRequest({ id, taskData });
+        setTasks(prevTasks => prevTasks.map(task => task.id === id ? updatedTask : task));
+        return updatedTask;
+    }
+
+    const deleteTask = async (id) => {
+        await deleteTaskRequest(id);
+        setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
+    }
+    
+    const moveTask = async ({ taskId, targetColumnId }) => {
+        const movedTask = await moveTaskRequest({ taskId, targetColumnId });
+        setTasks(prevTasks => prevTasks.map(task => task.id === taskId ? movedTask : task));
+        return movedTask;
+    }
 
     return {
         // Данные

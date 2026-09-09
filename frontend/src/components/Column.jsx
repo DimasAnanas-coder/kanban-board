@@ -4,13 +4,18 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import Task from './Task';
 
 export default function Column({
+    columns,
     column,
     tasks,
     onEditClick,
     onDeleteClick,
 }) {
     const { setNodeRef } = useDroppable({
-        id: column.title,
+        id: `column-${column.id}`,
+        data: {
+            type: 'column',
+            columnId: column.id,
+        },
     });
 
     return (
@@ -22,7 +27,7 @@ export default function Column({
                 <div className="flex justify-between mb-4">
                     <div className="rounded-full px-2 py-1" style={{ background: column.color }}>
                         <h2 className='font-bold'>
-                            {column.title}
+                            {column.name}
                         </h2>
                     </div>
 
@@ -36,12 +41,13 @@ export default function Column({
 
 
                 <SortableContext
-                    items={tasks.map(task => task.id)}
+                    items={tasks.map(task => `task-${task.id}`)}
                     strategy={verticalListSortingStrategy}
                 >
                     {tasks.map((task) => (
                         <Task
-                            key={task.id}
+                            key={`task-${task.id}`}
+                            columns={columns}
                             onEditClick={onEditClick}
                             onDeleteClick={onDeleteClick}
                             task={task}

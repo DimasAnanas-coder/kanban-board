@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useColumns } from './api';
 
 /**
  * Хук для управления формой задачи (создание/редактирование)
@@ -16,6 +17,7 @@ import { useState } from 'react';
  * @returns {Function} returns.handleSubmit - Обработчик отправки формы
  */
 export function useTaskForm(
+    columns,
     initialTask = null,
     onSubmit,
     onClose,
@@ -25,7 +27,7 @@ export function useTaskForm(
     const [title, setTitle] = useState(initialTask?.title || '');
     const [description, setDescription] = useState(initialTask?.description || '');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault();
 
         if (!title.trim()) {
@@ -33,23 +35,21 @@ export function useTaskForm(
             return;
         }
 
-        let techTaskData = null;
-        if (isEditing) {
-            techTaskData = initialTask;
-        } else {
-            const date = new Date().toISOString().split('T')[0];
-            techTaskData = {
-                id: Date.now().toString(),
-                date: date,
-                column: 'To Do',
-            };
-        }
+        const firstColumnId = columns.length > 0 ? columns[0].id : null;
 
-        onSubmit({
-            ...techTaskData,
-            title: title.trim(),
-            description: description.trim() || 'Нет описания',
-        });
+        if (isEditing) {
+            await onSubmit({
+                id: initialTask.id,
+                title: title.trim(),
+                description: description.trim(),
+            });
+        } else {
+            await onSubmit({
+                title: title.trim(),
+                description: description.trim() || 'Нет описания',
+                columnId: firstColumnId,
+            });
+        }
 
         setTitle('');
         setDescription('');

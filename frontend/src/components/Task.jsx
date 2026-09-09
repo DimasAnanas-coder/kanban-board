@@ -1,11 +1,11 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { COLUMNS } from '../config';
 
 import editIcon from '../assets/editWhite.svg';
 import trashIcon from '../assets/trash.svg';
 
 export default function Task({
+    columns,
     task,
     onEditClick,
     onDeleteClick,
@@ -18,9 +18,16 @@ export default function Task({
         transform,
         transition,
         isDragging,
-    } = useSortable({ id: task.id });
+    } = useSortable({
+         id: `task-${task.id}`,
+         data: {
+             type: 'task',
+             taskId: task.id,
+             columnId: task.columnId,
+         },
+    });
 
-    const taskColumnObj = COLUMNS.find((column) => task.column === column.title);
+    const taskColumnObj = columns.find((column) => task.columnId === column.id);
     const color = isMoving ? taskColumnObj.color : null;
 
     const style = {
@@ -33,6 +40,12 @@ export default function Task({
     const borderStyle = isMoving ? '' : 'border-thirdary';
     const cursorRuleStyle =  isMoving ? 'cursor-grabbing' : 'cursor-grab active:cursor-grabbing';
     const shadowRuleStyle = 'shadow-md hover:shadow-lg transition-shadow';
+
+    const date = new Date(task.createdAt).toLocaleDateString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    });
 
     return (
         <div
@@ -56,7 +69,7 @@ export default function Task({
             <div className='flex flex-col justify-between min-w-18 w-18'>
                 <div className='flex justify-end'>
                     <p className='text-xs'>
-                        { task.date }
+                        { date }
                     </p>
                 </div>
 

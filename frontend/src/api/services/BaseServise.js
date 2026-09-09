@@ -1,3 +1,6 @@
+import apiClient from '../config';
+
+
 export default class BaseService {
     constructor(endpoint) {
         this.endpoint = endpoint;

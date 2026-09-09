@@ -4,12 +4,14 @@ import { FormActions } from '../forms';
 import { useTaskForm } from '../../../hooks/useTaskForm';
 
 export default function AddTask({
+    columns,
     isOpen,
     onClose,
     onAddTask,
     showAlert,
 }) {
     const { title, setTitle, description, setDescription, handleSubmit } = useTaskForm(
+        columns,
         null,
         onAddTask,
         onClose,
