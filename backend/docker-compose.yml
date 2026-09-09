@@ -23,9 +23,6 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
-    volumes:
-      - .:/app/backend
-      - /app/backend/node_modules
     environment:
       DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@postgres:${DB_PORT:-5432}/${DB_NAME:-kanban_db}
     ports:
