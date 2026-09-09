@@ -46,10 +46,9 @@ export default function Home() {
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-10">
-                    {ADVANTAGES.map((advantage, index, width) => (
+                    {ADVANTAGES.map((advantage, index) => (
                         <AdvantageAppCard
                             key={index}
-                            width={width}
                             {...advantage}
                         />
                     ))}
