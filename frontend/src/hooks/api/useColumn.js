@@ -1,5 +1,5 @@
-import ColumnService from "../../api/services/ColumnServise";
-import { useApi } from "./useApi";
+import ColumnService from '../../api/services/ColumnServise';
+import { useApi } from './useApi';
 
 
 const columnService = new ColumnService();
@@ -11,13 +11,13 @@ export function useColumns() {
         setData: setColumns,
         loading: columnsLoading,
         error: columnsError,
-        execute: fetchColumns
+        execute: fetchColumns,
     } = useApi(
         () => columnService.getAll(),
-        { 
+        {
             immediate: true,
-            initialData: [], 
-        }
+            initialData: [],
+        },
     );
 
     return {
@@ -25,6 +25,6 @@ export function useColumns() {
         loading: columnsLoading,
         error: columnsError,
         fetchColumns,
-        setColumns
+        setColumns,
     };
 }

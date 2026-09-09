@@ -4,7 +4,7 @@ import { FormActions } from '../forms';
 import { useTaskForm } from '../../../hooks/useTaskForm';
 
 export default function EditTask({
-    columns, 
+    columns,
     isOpen,
     task,
     onClose,

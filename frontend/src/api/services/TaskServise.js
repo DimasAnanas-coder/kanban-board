@@ -1,5 +1,5 @@
-import apiClient from "../config";
-import BaseService from "./BaseServise";
+import apiClient from '../config';
+import BaseService from './BaseServise';
 
 
 export default class TaskService extends BaseService {

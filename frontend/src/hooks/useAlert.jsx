@@ -15,7 +15,7 @@ export function useAlert() {
         setAlert({
             isOpen: true,
             text,
-            color
+            color,
         });
     };
 
@@ -23,12 +23,12 @@ export function useAlert() {
         setAlert({
             isOpen: false,
             text: '',
-            color: ''
+            color: '',
         });
     };
 
     useEffect(() => {
-         const timeoutId = setTimeout(hideAlert, ALERT_DELAY_MS);
+        const timeoutId = setTimeout(hideAlert, ALERT_DELAY_MS);
         return () => clearTimeout(timeoutId);
     }, [alert.isOpen]);
 

@@ -1,10 +1,10 @@
 import { ALERT_COLORS } from '../config';
 
 
-export default function Alert({ 
+export default function Alert({
     text,
-    color='accent'
- }) {
+    color='accent',
+}) {
     if (!(color in ALERT_COLORS)){
         throw new Error(`Недопустимое значение параметра color - ${color}`);
     }

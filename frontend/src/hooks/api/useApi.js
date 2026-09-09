@@ -19,7 +19,7 @@ export function useApi(
 
     const dependeciesForCallback = [...dependencies, onSuccess, onError];
 
-    const execute = useCallback(async (...apiArgs) => {
+    const execute = useCallback(async(...apiArgs) => {
         setLoading(true);
         setError(null);
         try {
@@ -56,6 +56,6 @@ export function useApi(
             setData(null);
             setError(null);
             setLoading(false);
-        }
+        },
     };
 }

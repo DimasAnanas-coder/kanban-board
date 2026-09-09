@@ -19,12 +19,12 @@ export default function Task({
         transition,
         isDragging,
     } = useSortable({
-         id: `task-${task.id}`,
-         data: {
-             type: 'task',
-             taskId: task.id,
-             columnId: task.columnId,
-         },
+        id: `task-${task.id}`,
+        data: {
+            type: 'task',
+            taskId: task.id,
+            columnId: task.columnId,
+        },
     });
 
     const taskColumnObj = columns.find((column) => task.columnId === column.id);

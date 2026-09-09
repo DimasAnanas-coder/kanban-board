@@ -1,8 +1,8 @@
-export default function AdvantageAppCard({ 
-    title, 
-    description, 
-    icon, 
-    width=1 
+export default function AdvantageAppCard({
+    title,
+    description,
+    icon,
+    width=1,
 }) {
     return (
         <div className={`bg-secondary p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow col-span-${width}`}>

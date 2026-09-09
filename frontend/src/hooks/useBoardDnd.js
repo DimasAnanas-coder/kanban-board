@@ -22,7 +22,7 @@ export function useBoardDnd(tasks, handleMoveTask, setTasks) {
     const handleDragStart = useCallback((event) => {
         const taskId = event.active.data.current?.taskId;
         setActiveId(
-            Number.isInteger(taskId) ? taskId : null
+            Number.isInteger(taskId) ? taskId : null,
         );
     }, []);
 

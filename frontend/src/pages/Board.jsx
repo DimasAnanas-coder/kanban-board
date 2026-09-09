@@ -20,7 +20,7 @@ export default function Board() {
         updateTask,
         deleteTask,
         moveTask,
-        setTasks
+        setTasks,
     } = useTasks();
 
     console.log(error);
@@ -35,7 +35,7 @@ export default function Board() {
 
     const { showAlert, AlertComponent } = useAlert();
 
-    const handleAddTask = async (newTask) => {
+    const handleAddTask = async(newTask) => {
         try {
             await createTask(newTask);
             showAlert('Задача успешно добавлена', 'ok');
@@ -45,7 +45,7 @@ export default function Board() {
         }
     };
 
-    const handleEditTask = async ({id, title, description}) => {
+    const handleEditTask = async({ id, title, description }) => {
         try {
             await updateTask({ id, taskData: { title, description } });
             showAlert('Задача успешно обновлена', 'ok');
@@ -55,7 +55,7 @@ export default function Board() {
         }
     };
 
-    const handleDeleteTask = async (id) => {
+    const handleDeleteTask = async(id) => {
         try {
             await deleteTask(id);
             showAlert('Задача успешно удалена', 'ok');
@@ -65,7 +65,7 @@ export default function Board() {
         }
     };
 
-    const handleMoveTask = async (taskId, targetColumnId) => {
+    const handleMoveTask = async(taskId, targetColumnId) => {
         try {
             await moveTask({ taskId, targetColumnId });
             showAlert('Задача успешно перемещена', 'ok');

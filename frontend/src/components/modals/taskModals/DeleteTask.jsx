@@ -7,7 +7,7 @@ export default function DeleteTask({
     onDeleteTask,
     task,
 }) {
-    const handleDelete = async () => {
+    const handleDelete = async() => {
         await onDeleteTask(task.id);
         onClose();
     };
