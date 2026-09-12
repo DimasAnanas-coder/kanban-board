@@ -8,3 +8,4 @@ export { TaskResponseDTO, CreateTaskRequestDTO, UpdateTaskRequestDTO, MoveTaskRe
 export { ColumnResponseDTO } from './column.response.dto.js';
 export { CreateColumnRequestDTO } from './create-column.request.dto.js';
 export { UpdateColumnRequestDTO } from './update-column.request.dto.js';
+export { TaskListItemResponseDTO } from './task-list-item.response.dto.js'

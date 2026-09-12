@@ -9,6 +9,7 @@ import {
     TaskResponseDTO,
     type UpdateTaskRequestDTO,
     type MoveTaskRequestDTO,
+    TaskListItemResponseDTO,
 } from '../dto/index.js';
 
 export function mapTaskToResponse(task: TaskData): TaskResponseDTO {
@@ -47,5 +48,18 @@ export function mapMoveTaskRequestToInput(
     return {
         id: id,
         columnId: request.columnId,
+        beforeTaskId: request.beforeTaskId,
+        afterTaskId: request.afterTaskId
     };
+}
+
+export function mapTaskToResponseListItem(task: TaskData): TaskListItemResponseDTO {
+    return new TaskListItemResponseDTO(
+        task.id,
+        task.title,
+        task.columnId,
+        task?.description,
+        task.orderId,
+        task.createdAt.toISOString(),
+    );
 }

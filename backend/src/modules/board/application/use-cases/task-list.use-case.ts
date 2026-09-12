@@ -11,6 +11,26 @@ export class TaskListUseCase {
     ) {}
 
     async execute(): Promise<TaskData[]> {
-        return this.tasks.findAll();
+        const allTasks = await this.tasks.findAll();
+
+        const byColumn = new Map<number, TaskData[]>();
+        for (const task of allTasks) {
+            const group = byColumn.get(task.columnId);
+            if (group) {
+                group.push(task);
+            } else {
+                byColumn.set(task.columnId, [task]);
+            }
+        }
+
+        const result: TaskData[] = [];
+        for (const group of byColumn.values()) {
+            group.sort((a, b) => a.orderId - b.orderId);
+            group.forEach((task, index) => {
+                result.push({ ...task, orderId: index + 1 });
+            });
+        }
+
+        return result;
     }
 }

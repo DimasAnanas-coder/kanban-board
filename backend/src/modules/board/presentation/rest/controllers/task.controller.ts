@@ -13,12 +13,14 @@ import {
     CreateTaskRequestDTO,
     TaskResponseDTO,
     UpdateTaskRequestDTO,
+    TaskListItemResponseDTO,
 } from '../dto/index.js';
 import {
     mapCreateTaskRequestToInput,
     mapTaskToResponse,
     mapUpdateTaskRequestToInput,
     mapMoveTaskRequestToInput,
+    mapTaskToResponseListItem,
 } from '../mappers/task.mapper.js';
 
 @Controller('task')
@@ -69,9 +71,9 @@ export class TaskController {
     }
 
     @Get()
-    async findAll(): Promise<TaskResponseDTO[]> {
+    async findAll(): Promise<TaskListItemResponseDTO[]> {
         const tasks = await this.taskList.execute();
-        return tasks.map((task) => mapTaskToResponse(task));
+        return tasks.map((task) => mapTaskToResponseListItem(task));
     }
 
     @Delete(':id')

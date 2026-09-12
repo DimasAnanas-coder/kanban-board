@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
     provider = "postgresql"
-    url = env("DATABASE_URL")
+    url = env("DB_URL")
 }
 
 model Task {
@@ -14,8 +14,11 @@ model Task {
     description String?
     column      Column   @relation(fields: [columnId], references: [id])
     columnId    Int
+    orderId     Float
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
+
+    @@unique([orderId, columnId])
 }
 
 model Column {

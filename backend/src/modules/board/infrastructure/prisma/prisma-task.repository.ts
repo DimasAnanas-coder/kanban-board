@@ -9,10 +9,10 @@ import {
 } from '../../application/errors/index.js';
 import { TaskRepository } from '../../application/ports/task.repository.js';
 import {
-    MoveTaskCommand,
-    CreateTaskCommand,
     TaskData,
     UpdateTaskCommand,
+    CreateTaskRepositoryCommand,
+    MoveTaskRepositoryCommand,
 } from '../../application/types/task.data.js';
 import { PrismaRepository } from './prisma.repository.js';
 
@@ -33,12 +33,13 @@ export class PrismaTaskRepository extends PrismaRepository implements TaskReposi
         return task ? this.toTaskData(task) : null;
     }
 
-    async createTask(command: CreateTaskCommand): Promise<TaskData> {
+    async createTask(command: CreateTaskRepositoryCommand): Promise<TaskData> {
         try {
             const task = await this.service.task.create({
                 data: {
                     title: command.title,
                     description: command.description,
+                    orderId: command.orderId,
                     columnId: command.columnId,
                 },
             });
@@ -66,11 +67,14 @@ export class PrismaTaskRepository extends PrismaRepository implements TaskReposi
         return this.toTaskData(task);
     }
 
-    async changeColumn(command: MoveTaskCommand): Promise<TaskData> {
+    async changeColumn(command: MoveTaskRepositoryCommand): Promise<TaskData> {
         try {
             const task = await this.service.task.update({
                 where: { id: command.id },
-                data: { columnId: command.columnId },
+                data: { 
+                    columnId: command.columnId,
+                    orderId: command.orderId 
+                },
             });
 
             return this.toTaskData(task);
@@ -111,6 +115,17 @@ export class PrismaTaskRepository extends PrismaRepository implements TaskReposi
         return count;
     }
 
+    async getMinOrderTask(columnId: number): Promise<TaskData | null> {
+        return this.service.task.findFirst({
+            where: {
+                columnId: columnId
+            },
+            orderBy: {
+                orderId: 'asc'
+            }
+        });
+    }
+
 
     private toTaskData(task: PrismaTask): TaskData {
         return {
@@ -118,6 +133,7 @@ export class PrismaTaskRepository extends PrismaRepository implements TaskReposi
             title: task.title,
             description: task.description,
             columnId: task.columnId,
+            orderId: task.orderId,
             createdAt: task.createdAt,
         };
     }

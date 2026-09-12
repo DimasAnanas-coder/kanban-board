@@ -3,6 +3,7 @@ export interface TaskData {
     title: string;
     description: string | null;
     columnId: number;
+    orderId: number;
     createdAt: Date;
 }
 
@@ -21,4 +22,19 @@ export interface UpdateTaskCommand {
 export interface MoveTaskCommand {
     id: number;
     columnId: number;
+    beforeTaskId: number | null;
+    afterTaskId: number | null;
+}
+
+export interface CreateTaskRepositoryCommand {
+    title: string;
+    description?: string;
+    columnId: number;
+    orderId: number
+}
+
+export interface MoveTaskRepositoryCommand {
+    id: number;
+    columnId: number;
+    orderId: number
 }
