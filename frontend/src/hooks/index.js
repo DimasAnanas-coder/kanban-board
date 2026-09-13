@@ -3,6 +3,7 @@ import { useTaskForm } from './useTaskForm';
 import { useTaskModal } from './useTaskModal';
 import { useLocalStorage } from './useLocalStorage';
 import { useAlert } from './useAlert';
+import { useTaskActions } from './useTaskActions'
 export * from './api';
 
 export {
@@ -11,4 +12,5 @@ export {
     useTaskModal,
     useLocalStorage,
     useAlert,
+    useTaskActions,
 };
