@@ -2,10 +2,11 @@
   "name": "kanban-board",
   "private": true,
   "scripts": {
-    "docker:dev:up":   "docker compose -f backend/docker-compose.yml -f frontend/docker-compose.dev.yml up -d --build",
+    "docker:up":   "docker compose -f backend/docker-compose.yml -f frontend/docker-compose.dev.yml up -d --build",
     "docker:build": "docker compose -f backend/docker-compose.yml -f frontend/docker-compose.dev.yml up -d --build --renew-anon-volumes",
     "docker:down": "docker compose -f backend/docker-compose.yml -f frontend/docker-compose.dev.yml down",
-    "docker:logs": "docker compose -f backend/docker-compose.yml -f frontend/docker-compose.dev.yml logs -f"
+    "docker:logs": "docker compose -f backend/docker-compose.yml -f frontend/docker-compose.dev.yml logs -f",
+    "docker:migrate:deploy": "docker compose -f backend/docker-compose.yml -f frontend/docker-compose.dev.yml exec backend npx prisma migrate deploy"
   }
 }
 

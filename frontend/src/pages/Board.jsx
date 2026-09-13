@@ -14,7 +14,6 @@ import { AddTask, EditTask, DeleteTask } from '../components/modals/taskModals';
 export default function Board() {
     const {
         tasks,
-        loading,
         error,
         createTask,
         updateTask,
@@ -65,12 +64,12 @@ export default function Board() {
         }
     };
 
-    const handleMoveTask = async(taskId, targetColumnId) => {
+    const handleMoveTask = async(taskId, targetColumnId, beforeTaskId, afterTaskId) => {
         try {
-            await moveTask({ taskId, targetColumnId });
+            await moveTask({ taskId, targetColumnId, beforeTaskId, afterTaskId });
             showAlert('Задача успешно перемещена', 'ok');
         } catch (err) {
-            showAlert('Ошибка при перемещении задачи', 'error');
+            showAlert(`Ошибка при перемещении задачи, ${err}`, 'error');
             console.error(err);
         }
     };
@@ -78,7 +77,9 @@ export default function Board() {
 
     const { activeTask, dndContextProps } = useBoardDnd(tasks, handleMoveTask, setTasks);
 
-    const { columns } = useColumns();
+    const { 
+        columns,
+    } = useColumns();
 
     return (
         <>

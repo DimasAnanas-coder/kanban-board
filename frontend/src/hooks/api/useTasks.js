@@ -52,8 +52,8 @@ export function useTasks() {
         loading: moveLoading,
         error: moveError,
     } = useApi(
-        ({ taskId, targetColumnId }) =>
-            taskService.move(taskId, targetColumnId),
+        ({ taskId, targetColumnId, beforeTaskId, afterTaskId }) =>
+            taskService.move(taskId, targetColumnId, beforeTaskId, afterTaskId),
         { immediate: false },
     );
 
@@ -75,8 +75,8 @@ export function useTasks() {
         setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
     };
 
-    const moveTask = async({ taskId, targetColumnId }) => {
-        const movedTask = await moveTaskRequest({ taskId, targetColumnId });
+    const moveTask = async({ taskId, targetColumnId, beforeTaskId, afterTaskId }) => {
+        const movedTask = await moveTaskRequest({ taskId, targetColumnId, beforeTaskId, afterTaskId });
         setTasks(prevTasks => prevTasks.map(task => task.id === taskId ? movedTask : task));
         return movedTask;
     };

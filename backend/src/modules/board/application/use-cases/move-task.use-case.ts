@@ -4,14 +4,13 @@ import {
     ColumnNotFoundError,
     TaskNotFoundError,
     ColumnCapacityExceededError,
-    TaskAlreadyInColumnError,
     BoundaryTasksNotTransferredError,
     CorruptedOrderError
 } from '../errors/index.js';
 
 import { MoveTaskCommand, TaskData } from '../types/task.data.js';
 import { UNIT_OF_WORK, UnitOfWork } from '../ports/unit-of-work.js';
-import { COLUMN_CAPACITY } from '../config.js';
+import { BASE_ORDER_ID, COLUMN_CAPACITY } from '../config.js';
 import { mapMoveTaskCommandToRepository } from '../mappers/task.mapper.js';
 import { TaskRepository } from '../ports/task.repository.js';
 
@@ -62,25 +61,32 @@ export class MoveTaskUseCase {
     }
 
     async execute(command: MoveTaskCommand): Promise<TaskData> {
-        return this.uow.execute(async ({tasks, columns}) => {
+        return this.uow.execute(async ({ tasks, columns }) => {
             const oldTask = await tasks.findById(command.id);
             if (!oldTask) {
                 throw new TaskNotFoundError(command.id);
             }
-            
-            const oldColumn = await columns.findById(command.columnId);
-            if (!oldColumn) {
+
+            const targetColumn = await columns.findById(command.columnId);
+            if (!targetColumn) {
                 throw new ColumnNotFoundError(command.columnId);
             }
 
-            if (await tasks.countByColumnId(command.columnId) >= COLUMN_CAPACITY) {
+            const targetColumnTaskCount = await tasks.countByColumnId(command.columnId);
+
+            if (targetColumnTaskCount >= COLUMN_CAPACITY) {
                 throw new ColumnCapacityExceededError();
             }
 
+            
+            const orderId = targetColumnTaskCount === 0
+                ? BASE_ORDER_ID
+                : await this.calculateOrderId(tasks, command);
+
             return tasks.changeColumn(mapMoveTaskCommandToRepository(
                 command,
-                await this.calculateOrderId(tasks, command)
+                orderId
             ));
-        })
+        });
     }
 }

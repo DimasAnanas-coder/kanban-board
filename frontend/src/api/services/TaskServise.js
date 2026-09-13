@@ -7,8 +7,8 @@ export default class TaskService extends BaseService {
         super('/task');
     }
 
-    async move(taskId, columnId) {
-        const response = await apiClient.patch(`${this.endpoint}/${taskId}/column`, { columnId });
+    async move(taskId, columnId, beforeTaskId, afterTaskId) {
+        const response = await apiClient.patch(`${this.endpoint}/${taskId}/column`, { columnId, beforeTaskId, afterTaskId });
         return response.data;
     }
 }

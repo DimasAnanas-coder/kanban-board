@@ -8,7 +8,7 @@ import {
 
 import { UNIT_OF_WORK, UnitOfWork } from '../ports/unit-of-work.js';
 import { CreateTaskCommand, TaskData } from '../types/task.data.js';
-import { COLUMN_CAPACITY } from '../config.js';
+import { BASE_ORDER_ID, COLUMN_CAPACITY } from '../config.js';
 import { mapCreateTaskComandToRepository } from '../mappers/task.mapper.js';
 
 @Injectable()
@@ -30,10 +30,8 @@ export class CreateTaskUseCase {
             }
 
             const minOrderTask = await tasks.getMinOrderTask(column.id);
-            let newTaskOrderId = 0;
-            if (!minOrderTask){
-                newTaskOrderId = 1;
-            } else{
+            let newTaskOrderId = BASE_ORDER_ID;
+            if (minOrderTask) {
                 newTaskOrderId = minOrderTask.orderId - 1;
             }
            
