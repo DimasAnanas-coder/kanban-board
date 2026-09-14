@@ -2,6 +2,21 @@ import { useMemo } from 'react';
 import { useAlertContext } from '../contexts/AlertContext';
 
 
+function makeErrorMessage(config, err){
+    let errMsg = ''
+    if (typeof config.errorMessage == 'object'){
+        if (err.response.data.code in config.errorMessage) {
+            errMsg = config.errorMessage[err.response.data.code];
+        } else{
+            errMsg = config.errorMessage['default'];
+        }
+    } else{
+        errMsg = config.errorMessage;
+    }
+
+    return errMsg
+}
+
 function createAction(showAlert, config) {
     return async (...args) => {
         try {
@@ -9,7 +24,7 @@ function createAction(showAlert, config) {
             showAlert(config.successMessage, 'ok');
             return result;
         } catch (err) {
-            showAlert(config.errorMessage, 'error');
+            showAlert(makeErrorMessage(config, err), 'error');
             console.error(err);
             throw err;
         }
@@ -28,7 +43,10 @@ export function useTaskActions({
         handleAddTask: createAction(showAlert, {
             action: (newTask) => createTask(newTask),
             successMessage: 'Задача успешно добавлена',
-            errorMessage: 'Ошибка при добавлении задачи',
+            errorMessage: {
+                'COLUMN_CAPACITY_EXCEEDED': 'В колонке уже слишком много задач. Новую сюда добавить нельзя',
+                'default': 'Ошибка при создании задачи'
+            }
         }),
 
         handleEditTask: createAction(showAlert, {
@@ -48,7 +66,10 @@ export function useTaskActions({
             action: (taskId, targetColumnId, beforeTaskId, afterTaskId) =>
                 moveTask({ taskId, targetColumnId, beforeTaskId, afterTaskId }),
             successMessage: 'Задача успешно перемещена',
-            errorMessage: 'Ошибка при перемещении задачи',
+            errorMessage: {
+                'COLUMN_CAPACITY_EXCEEDED': 'В колонке уже слишком много задач. Перемещать в эту колонку нельзя',
+                'default': 'Ошибка при перемещении задачи'
+            }
         }),
     }), [createTask, updateTask, deleteTask, moveTask]);
 }
