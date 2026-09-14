@@ -74,11 +74,10 @@ export class MoveTaskUseCase {
 
             const targetColumnTaskCount = await tasks.countByColumnId(command.columnId);
 
-            if (targetColumnTaskCount >= COLUMN_CAPACITY) {
+            if (targetColumnTaskCount >= COLUMN_CAPACITY && oldTask.columnId != targetColumn.id) {
                 throw new ColumnCapacityExceededError();
             }
 
-            
             const orderId = targetColumnTaskCount === 0
                 ? BASE_ORDER_ID
                 : await this.calculateOrderId(tasks, command);
