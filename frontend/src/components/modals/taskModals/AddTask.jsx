@@ -8,7 +8,6 @@ export default function AddTask({
     isOpen,
     onClose,
     onAddTask,
-    showAlert,
 }) {
     const { title, setTitle, description, setDescription, handleSubmit } = useTaskForm(
         columns,
@@ -16,7 +15,6 @@ export default function AddTask({
         onAddTask,
         onClose,
         false,
-        showAlert,
     );
 
     return (

@@ -7,8 +7,7 @@ export default function TaskModals({
     onClose,
     onAddTask,
     onEditTask,
-    onDeleteTask,
-    showAlert,
+    onDeleteTask
 }) {
     if (!modal) return null;
 
@@ -19,7 +18,6 @@ export default function TaskModals({
                 isOpen
                 onClose={onClose}
                 onAddTask={onAddTask}
-                showAlert={showAlert}
             />
         );
     }
@@ -33,7 +31,6 @@ export default function TaskModals({
                 task={modal.task}
                 onClose={onClose}
                 onEditTask={onEditTask}
-                showAlert={showAlert}
             />
         );
     }

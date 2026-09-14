@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useAlertContext } from '../contexts/AlertContext';
 
 
 function createAction(showAlert, config) {
@@ -19,9 +20,10 @@ export function useTaskActions({
     createTask,
     updateTask,
     deleteTask,
-    moveTask,
-    showAlert,
+    moveTask
 }) {
+    const { showAlert } = useAlertContext();
+    
     return useMemo(() => ({
         handleAddTask: createAction(showAlert, {
             action: (newTask) => createTask(newTask),
@@ -48,5 +50,5 @@ export function useTaskActions({
             successMessage: 'Задача успешно перемещена',
             errorMessage: 'Ошибка при перемещении задачи',
         }),
-    }), [createTask, updateTask, deleteTask, moveTask, showAlert]);
+    }), [createTask, updateTask, deleteTask, moveTask]);
 }

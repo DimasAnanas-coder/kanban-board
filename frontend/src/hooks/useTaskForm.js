@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useColumns } from './api';
+import { useAlertContext } from '../contexts/AlertContext';
 
 /**
  * Хук для управления формой задачи (создание/редактирование)
@@ -22,10 +22,10 @@ export function useTaskForm(
     onSubmit,
     onClose,
     isEditing = false,
-    showAlert,
 ) {
     const [title, setTitle] = useState(initialTask?.title || '');
     const [description, setDescription] = useState(initialTask?.description || '');
+    const { showAlert } = useAlertContext();
 
     const handleSubmit = async(event) => {
         event.preventDefault();

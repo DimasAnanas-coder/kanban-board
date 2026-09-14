@@ -3,7 +3,7 @@ import {
     DragOverlay,
 } from '@dnd-kit/core';
 
-import { useTaskModal, useBoardDnd, useAlert, useTasks, useColumns, useTaskActions } from '../hooks';
+import { useTaskModal, useBoardDnd, useTasks, useColumns, useTaskActions } from '../hooks';
 
 import Column from '../components/Column';
 import Task from '../components/Task';
@@ -32,14 +32,11 @@ export default function Board() {
         closeModal,
     } = useTaskModal();
 
-    const { showAlert, AlertComponent } = useAlert();
-
     const { handleAddTask, handleEditTask, handleDeleteTask, handleMoveTask } = useTaskActions({
         createTask,
         updateTask,
         deleteTask,
-        moveTask,
-        showAlert,
+        moveTask
     });
 
     const { activeTask, dndContextProps } = useBoardDnd(tasks, handleMoveTask, setTasks);
@@ -88,10 +85,7 @@ export default function Board() {
                 onAddTask={handleAddTask}
                 onEditTask={handleEditTask}
                 onDeleteTask={handleDeleteTask}
-                showAlert={showAlert}
             />
-
-            { AlertComponent }
         </>
     );
 }

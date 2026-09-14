@@ -9,7 +9,6 @@ export default function EditTask({
     task,
     onClose,
     onEditTask,
-    showAlert,
 }) {
     const { title, setTitle, description, setDescription, handleSubmit } = useTaskForm(
         columns,
@@ -17,7 +16,6 @@ export default function EditTask({
         onEditTask,
         onClose,
         true,
-        showAlert,
     );
 
     return (
