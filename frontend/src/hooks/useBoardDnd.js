@@ -13,6 +13,8 @@ export function useBoardDnd(tasks, handleMoveTask, setTasks) {
     const tasksRef = useRef(tasks);
     tasksRef.current = tasks;
 
+    const tasksSnapshot = useRef(null);
+
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: {
@@ -26,6 +28,7 @@ export function useBoardDnd(tasks, handleMoveTask, setTasks) {
         setActiveId(
             Number.isInteger(taskId) ? taskId : null,
         );
+        tasksSnapshot.current = tasksRef.current;
     }, []);
 
     const handleDragOver = useCallback((event) => {
@@ -75,7 +78,7 @@ export function useBoardDnd(tasks, handleMoveTask, setTasks) {
         });
     }, [setTasks]);
 
-    const handleDragEnd = useCallback((event) => {
+    const handleDragEnd = useCallback(async (event) => {
         const { active, over } = event;
 
         setActiveId(null);
@@ -108,8 +111,13 @@ export function useBoardDnd(tasks, handleMoveTask, setTasks) {
             targetColumnId,
             overTaskId,
         );
-
-        handleMoveTask(activeTaskId, targetColumnId, beforeTaskId, afterTaskId);
+        try {
+            await handleMoveTask(activeTaskId, targetColumnId, beforeTaskId, afterTaskId);
+        } catch(err) {
+            console.log(tasksSnapshot.current);
+            setTasks(tasksSnapshot.current);
+        }
+        
     }, [handleMoveTask]);
 
     return {

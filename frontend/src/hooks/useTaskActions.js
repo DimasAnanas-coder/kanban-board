@@ -11,7 +11,7 @@ function createAction(showAlert, config) {
         } catch (err) {
             showAlert(config.errorMessage, 'error');
             console.error(err);
-            return undefined;
+            throw err;
         }
     };
 }
