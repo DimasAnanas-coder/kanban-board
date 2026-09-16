@@ -1,5 +1,5 @@
 import BaseModal from './BaseModal';
-import { FormActions } from './forms';
+import { FormActions } from '../forms';
 
 export default function DeleteModal({
     isOpen,

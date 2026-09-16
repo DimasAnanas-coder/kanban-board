@@ -1,6 +1,6 @@
 import BaseModal from '../BaseModal';
-import { TitleDescriptionForm } from '../forms/combinations';
-import { FormActions } from '../forms';
+import { TitleDescriptionForm } from '../../forms/combinations';
+import { FormActions } from '../../forms';
 import { useTaskForm } from '../../../hooks/useTaskForm';
 
 export default function AddTask({
