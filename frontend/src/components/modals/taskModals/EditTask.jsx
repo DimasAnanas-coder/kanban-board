@@ -1,6 +1,6 @@
 import BaseModal from '../BaseModal';
 import { TitleDescriptionForm } from '../../forms/combinations';
-import { FormActions } from '../../forms';
+import { FormActions, PhotoInput } from '../../forms';
 import { useTaskForm } from '../../../hooks/useTaskForm';
 
 export default function EditTask({
@@ -31,6 +31,10 @@ export default function EditTask({
                     description={description}
                     setDescription={setDescription}
                     onSubmit={handleSubmit}
+                />
+
+                <PhotoInput
+                    taskId={task.id}
                 />
 
                 <FormActions
