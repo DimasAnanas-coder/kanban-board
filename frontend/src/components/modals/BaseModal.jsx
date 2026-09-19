@@ -9,7 +9,7 @@ export default function BaseModal({ isOpen, onClose, children }) {
             onClick={onClose}
         >
             <div
-                className='bg-secondary rounded-md '
+                className='bg-secondary rounded-md max-w-[500px] w-[500px]'
                 onClick={(event) => event.stopPropagation()}
             >
                 { children }

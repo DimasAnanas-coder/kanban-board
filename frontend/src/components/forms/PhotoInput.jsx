@@ -1,7 +1,10 @@
 import { useImageUpload } from "../../hooks"
 import Button from "../Button";
 
-export default function PhotoInput({taskId}) {
+export default function PhotoInput({
+    taskId,
+    maxImagesCount = 3
+}) {
     const {
         images,
         inputRef,
@@ -9,7 +12,7 @@ export default function PhotoInput({taskId}) {
         handleUploadImage,
         handleRemoveImage,
         // handleClearImages,
-    } = useImageUpload(taskId);
+    } = useImageUpload(taskId, maxImagesCount);
 
     return (
         <div>
@@ -21,27 +24,38 @@ export default function PhotoInput({taskId}) {
                 onChange={handleUploadImage}
                 style={{ display: 'none' }}
             />
-            <Button
-                onClick={handleClickForm}
-            > Добавить фото </Button>
 
-            {images.length > 0 && (
-                <div className="flex gap-2 mt-3 flex-wrap">
-                    {images.map((img) => (
-                        <div key={img.id} className="relative">
+            <div className={`grid gap-2 mt-2 mb-2 grid-cols-${maxImagesCount}`}>
+                {images.length > 0 && images.map((img) => (
+                    <div key={img.id} className="relative aspect-square">
+                        <a
+                            href={img.previewUrl}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
                             <img
                                 src={img.previewUrl}
                                 alt={img.file.name}
-                                className="w-24 h-24 object-cover rounded"
+                                className="object-cover rounded w-full h-full"
                             />
-                            <Button
-                                onClick={() => handleRemoveImage(img.id)}
-                                className="absolute top-0 right-0 px-1.5 py-0 bg-black/80 hover:bg-primary/70 rounded-xl text-white"
-                            > × </Button>
-                        </div>
-                    ))}
-                </div>
-            )}
+                        </a>
+                        
+                        <Button
+                            onClick={() => handleRemoveImage(img.id)}
+                            className="absolute top-0 right-0 px-1.5 py-0 bg-black/80 hover:bg-primary/70 rounded-xl text-white"
+                        > × </Button>
+                    </div>
+                ))}
+                { images.length < maxImagesCount && (
+                    <div>
+                        <button
+                            className="aspect-square bg-thirdary rounded-xl border-2 border-dashed border-accent px-2 w-full h-full"
+                            onClick={handleClickForm}
+                            title="Добавьте изображение к задаче"
+                        > + </button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

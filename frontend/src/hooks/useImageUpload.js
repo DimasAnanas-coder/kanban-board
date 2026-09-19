@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import { useImages } from './api';
 
 export function useImageUpload(
@@ -7,6 +7,12 @@ export function useImageUpload(
 ) {
     const [images, setImages] = useImages(taskId);
     const inputRef = useRef(null);
+
+    useEffect(() => {
+        return () => {
+            images.forEach((file) => URL.revokeObjectURL(file.previewUrl));
+        };
+    }, []);
 
     const handleClickForm = useCallback(() => {
         inputRef.current?.click();
