@@ -33,12 +33,12 @@ export default function Board() {
         createTask,
         updateTask,
         deleteTask,
-        moveTask
+        moveTask,
     });
 
     const { activeTask, dndContextProps } = useBoardDnd(tasks, handleMoveTask, setTasks);
 
-    const { 
+    const {
         columns,
     } = useColumns();
 
@@ -74,7 +74,7 @@ export default function Board() {
                     )}
                 </DragOverlay>
             </DndContext>
-            
+
             <TaskModals
                 modal={modal}
                 columns={columns}

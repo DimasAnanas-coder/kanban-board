@@ -78,7 +78,7 @@ export function useBoardDnd(tasks, handleMoveTask, setTasks) {
         });
     }, [setTasks]);
 
-    const handleDragEnd = useCallback(async (event) => {
+    const handleDragEnd = useCallback(async(event) => {
         const { active, over } = event;
 
         setActiveId(null);
@@ -88,7 +88,7 @@ export function useBoardDnd(tasks, handleMoveTask, setTasks) {
         }
 
         const activeTaskId = active.data.current?.taskId;
-        if (activeTaskId == null) {
+        if (!activeTaskId) {
             return;
         }
 
@@ -101,7 +101,7 @@ export function useBoardDnd(tasks, handleMoveTask, setTasks) {
             ?? over.data.current?.columnId
             ?? null;
 
-        if (targetColumnId == null) {
+        if (!targetColumnId) {
             return;
         }
 
@@ -116,7 +116,7 @@ export function useBoardDnd(tasks, handleMoveTask, setTasks) {
         } catch {
             setTasks(tasksSnapshot.current);
         }
-        
+
     }, [handleMoveTask]);
 
     return {
@@ -134,7 +134,7 @@ export function useBoardDnd(tasks, handleMoveTask, setTasks) {
 function resolveNeighbors(tasks, activeTaskId, targetColumnId, overTaskId) {
     const columnTasks = tasks.filter((t) => t.columnId === targetColumnId);
 
-    if (overTaskId == null) {
+    if (!overTaskId) {
         const others = columnTasks.filter((t) => t.id !== activeTaskId);
         const last = others.length > 0 ? others[others.length - 1] : null;
 

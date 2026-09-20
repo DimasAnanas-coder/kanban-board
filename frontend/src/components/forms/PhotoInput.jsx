@@ -3,13 +3,13 @@ import { useImageUpload } from '../../hooks';
 
 function getGridClassName(maxImagesCount) {
     const gridClass = {
-        1: "grid-cols-1",
-        2: "grid-cols-2",
-        3: "grid-cols-3",
-        4: "grid-cols-4",
-    }
-    
-    return gridClass[maxImagesCount] ?? "grid-cols-3";
+        1: 'grid-cols-1',
+        2: 'grid-cols-2',
+        3: 'grid-cols-3',
+        4: 'grid-cols-4',
+    };
+
+    return gridClass[maxImagesCount] ?? 'grid-cols-3';
 }
 
 export default function PhotoInput({

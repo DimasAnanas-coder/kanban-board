@@ -7,9 +7,11 @@ export default function TaskModals({
     onClose,
     onAddTask,
     onEditTask,
-    onDeleteTask
+    onDeleteTask,
 }) {
-    if (!modal) return null;
+    if (!modal) {
+        return null;
+    }
 
     if (modal.type === 'add') {
         return (

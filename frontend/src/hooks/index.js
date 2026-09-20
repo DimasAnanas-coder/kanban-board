@@ -3,7 +3,7 @@ import { useTaskForm } from './useTaskForm';
 import { useTaskModal } from './useTaskModal';
 import { useLocalStorage } from './useLocalStorage';
 import { useAlert } from './useAlert';
-import { useTaskActions } from './useTaskActions'
+import { useTaskActions } from './useTaskActions';
 import { useImageUpload } from './useImageUpload';
 export * from './api';
 

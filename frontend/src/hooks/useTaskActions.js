@@ -3,8 +3,8 @@ import { useAlertContext } from '../contexts/AlertContext';
 
 
 function makeErrorMessage(config, err){
-    let errMsg = ''
-    if (typeof config.errorMessage == 'object'){
+    let errMsg = '';
+    if (typeof config.errorMessage === 'object'){
         if (err.response.data.code in config.errorMessage) {
             errMsg = config.errorMessage[err.response.data.code];
         } else{
@@ -14,11 +14,11 @@ function makeErrorMessage(config, err){
         errMsg = config.errorMessage;
     }
 
-    return errMsg
+    return errMsg;
 }
 
 function createAction(showAlert, config) {
-    return async (...args) => {
+    return async(...args) => {
         try {
             const result = await config.action(...args);
             showAlert(config.successMessage, 'ok');
@@ -35,18 +35,18 @@ export function useTaskActions({
     createTask,
     updateTask,
     deleteTask,
-    moveTask
+    moveTask,
 }) {
     const { showAlert } = useAlertContext();
-    
+
     return useMemo(() => ({
         handleAddTask: createAction(showAlert, {
             action: (newTask) => createTask(newTask),
             successMessage: 'Задача успешно добавлена',
             errorMessage: {
                 'COLUMN_CAPACITY_EXCEEDED': 'В колонке уже слишком много задач. Новую сюда добавить нельзя',
-                'default': 'Ошибка при создании задачи'
-            }
+                'default': 'Ошибка при создании задачи',
+            },
         }),
 
         handleEditTask: createAction(showAlert, {
@@ -68,8 +68,8 @@ export function useTaskActions({
             successMessage: 'Задача успешно перемещена',
             errorMessage: {
                 'COLUMN_CAPACITY_EXCEEDED': 'В колонке уже слишком много задач. Перемещать в эту колонку нельзя',
-                'default': 'Ошибка при перемещении задачи'
-            }
+                'default': 'Ошибка при перемещении задачи',
+            },
         }),
     }), [createTask, updateTask, deleteTask, moveTask]);
 }

@@ -1,16 +1,16 @@
 import { createContext, useContext } from 'react';
-import { useAlert } from '../hooks'
+import { useAlert } from '../hooks';
 
 const AlertContext = createContext();
 
 export function AlertProvider({ children }) {
     const { showAlert, AlertComponent } = useAlert();
     return (
-        <AlertContext.Provider value={{showAlert}}>
+        <AlertContext.Provider value={{ showAlert }}>
             { children }
             { AlertComponent }
         </AlertContext.Provider>
-    )
+    );
 }
 
 export function useAlertContext() {
