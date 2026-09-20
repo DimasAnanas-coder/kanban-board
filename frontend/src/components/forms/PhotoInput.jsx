@@ -1,10 +1,20 @@
-import ImagePreview from "../ImagePreview";
-import { useImageUpload } from "../../hooks"
+import ImagePreview from '../ImagePreview';
+import { useImageUpload } from '../../hooks';
 
+function getGridClassName(maxImagesCount) {
+    const gridClass = {
+        1: "grid-cols-1",
+        2: "grid-cols-2",
+        3: "grid-cols-3",
+        4: "grid-cols-4",
+    }
+    
+    return gridClass[maxImagesCount] ?? "grid-cols-3";
+}
 
 export default function PhotoInput({
     taskId,
-    maxImagesCount = 3
+    maxImagesCount = 3,
 }) {
     const {
         images,
@@ -12,7 +22,7 @@ export default function PhotoInput({
         handleClickForm,
         handleUploadImage,
         handleRemoveImage,
-        // handleClearImages,
+        loading,
     } = useImageUpload(taskId, maxImagesCount);
 
     return (
@@ -26,18 +36,19 @@ export default function PhotoInput({
                 style={{ display: 'none' }}
             />
 
-            <div className={`grid gap-2 mt-2 mb-2 grid-cols-${maxImagesCount}`}>
+            <div className={`grid gap-2 mt-2 mb-2 ${getGridClassName(maxImagesCount)}`}>
                 {images.length > 0 && images.map((img) => (
                     <ImagePreview
-                        key={img.id} 
-                        img={img}
+                        key={img.id}
+                        imageUrl={img}
                         onRemove={handleRemoveImage}
                     />
                 ))}
                 { images.length < maxImagesCount && (
                     <button
-                        className="aspect-square bg-thirdary rounded-xl border-2 border-dashed border-accent px-2 w-full h-full"
+                        className="aspect-square bg-thirdary hover:bg-thirdary/80 rounded-xl border-2 border-dashed border-accent px-2 w-full h-full"
                         onClick={handleClickForm}
+                        disabled={loading}
                         title="Добавьте изображение к задаче"
                     > + </button>
                 )}

@@ -1,12 +1,12 @@
 import { Injectable, Inject } from '@nestjs/common';
 
-import { TaskNotFoundError } from '../errors/index.js';
+import { TaskImageNotFoundError, TaskNotFoundError } from '../errors/index.js';
 import { TASK_IMAGE_REPOSITORY, TaskImageRepository } from '../ports/task-image.repository.js';
 import { TASK_IMAGE_STORAGE, TaskImageStorage } from '../ports/task-image.storage.js';
 import { TASK_REPOSITORY, TaskRepository } from '../ports/task.repository.js';
 
 @Injectable()
-export class DeleteTaskUseCase {
+export class DeleteTaskImageUseCase {
     constructor(
         @Inject(TASK_REPOSITORY)
         private readonly tasks: TaskRepository,
@@ -16,14 +16,17 @@ export class DeleteTaskUseCase {
         private readonly taskImageStorage: TaskImageStorage,
     ) {}
 
-    async execute(id: number): Promise<void> {
-        const images = await this.taskImages.findAllByTaskId(id);
-        if (!(await this.tasks.deleteTask(id))) {
-            throw new TaskNotFoundError(id);
+    async execute(taskId: number, imageId: number): Promise<void> {
+        const task = await this.tasks.findById(taskId);
+        if (!task) {
+            throw new TaskNotFoundError(taskId);
         }
 
-        if (images.length) {
-            await this.taskImageStorage.deleteAllByTaskId(id);
+        const image = await this.taskImages.deleteById(taskId, imageId);
+        if (!image) {
+            throw new TaskImageNotFoundError(taskId, imageId);
         }
+
+        await this.taskImageStorage.delete(taskId, image.filename);
     }
 }

@@ -5,6 +5,7 @@ export interface TaskData {
     columnId: number;
     orderId: number;
     createdAt: Date;
+    images?: string[];
 }
 
 export interface CreateTaskCommand {
@@ -30,11 +31,11 @@ export interface CreateTaskRepositoryCommand {
     title: string;
     description?: string;
     columnId: number;
-    orderId: number
+    orderId: number;
 }
 
 export interface MoveTaskRepositoryCommand {
     id: number;
     columnId: number;
-    orderId: number
+    orderId: number;
 }

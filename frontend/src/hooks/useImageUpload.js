@@ -1,58 +1,40 @@
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef } from 'react';
 import { useImages } from './api';
 
 export function useImageUpload(
     taskId,
-    maxFilesCount = 3
+    maxFilesCount = 3,
 ) {
-    const [images, setImages] = useImages(taskId);
+    const {
+        images,
+        createImage,
+        deleteImage,
+        createLoading,
+        deleteLoading,
+        error,
+    } = useImages(taskId);
     const inputRef = useRef(null);
-
-    useEffect(() => {
-        return () => {
-            images.forEach((file) => URL.revokeObjectURL(file.previewUrl));
-        };
-    }, []);
 
     const handleClickForm = useCallback(() => {
         inputRef.current?.click();
-    }, [inputRef])
+    }, [inputRef]);
 
-    const handleUploadImage = useCallback((event) => {
+    const handleUploadImage = useCallback(async(event) => {
         const files = Array.from(event.target.files ?? []);
-        if (!files.length) return;
+        if (!files.length) {
+            return;
+        }
 
-        setImages((prevImages) => {
-            const available = maxFilesCount - prevImages.length;
-            const toAdd = files.splice(0, available).map((file) => ({
-                file,
-                id: `${file.name}-${file.lastModified}-${Math.random()}`,
-                previewUrl: URL.createObjectURL(file),
-            }));
-
-            return [...prevImages, ...toAdd];
-        })
+        const available = maxFilesCount - images.length;
+        const toAdd = files.splice(0, available);
+        await Promise.all(toAdd.map((file) => createImage(file)));
 
         event.target.value = '';
-    }, [maxFilesCount]); 
+    }, [createImage, images.length, maxFilesCount]);
 
-    const handleRemoveImage = useCallback((id) => {
-        setImages((prevImages) => {
-            const targetImage = prevImages.find((file) => file.id === id);
-            URL.revokeObjectURL(targetImage.previewUrl);
-            return prevImages.filter((file) => file.id !== id);
-        });
-    }, [])
-
-    const handleClearImages = useCallback(() => {
-        setImages((prevImages) => {
-            prevImages.forEach((file) => {
-                URL.revokeObjectURL(file.previewUrl);
-            });
-            return [];
-        });
-    }, [])
-
+    const handleRemoveImage = useCallback(async(imageUrl) => {
+        await deleteImage(imageUrl);
+    }, [deleteImage]);
 
     return {
         images,
@@ -60,6 +42,7 @@ export function useImageUpload(
         handleClickForm,
         handleUploadImage,
         handleRemoveImage,
-        handleClearImages,
-    }
+        loading: createLoading || deleteLoading,
+        error,
+    };
 }

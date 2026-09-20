@@ -6,5 +6,6 @@ export class TaskListItemResponseDTO {
         private readonly description: string | null,
         private readonly orderId: number,
         private readonly createdAt: string,
+        private readonly images: string[],
     ) {}
 }

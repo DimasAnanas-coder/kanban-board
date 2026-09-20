@@ -5,5 +5,6 @@ export class TaskResponseDTO {
         private readonly columnId: number,
         private readonly description: string | null,
         private readonly createdAt: string,
+        private readonly images: string[],
     ) {}
 }

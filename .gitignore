@@ -4,6 +4,7 @@ backend/node_modules/
 
 frontend/design
 backend/prisma/migrations/migration_lock.toml
+backend/storage/
 
 # production
 frontend/dist/

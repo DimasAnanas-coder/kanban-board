@@ -30,5 +30,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    volumes:
+      - ./storage:/app/storage
+
 volumes:
   postgres_data:

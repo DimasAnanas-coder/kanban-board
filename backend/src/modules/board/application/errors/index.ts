@@ -13,3 +13,5 @@ export { EmptyTaskUpdateError } from './empty-task-update.error.js';
 export { TaskAlreadyInColumnError } from './task-already-in-column.error.js';
 export { BoundaryTasksNotTransferredError } from './boundary-tasks-not-transferred.error.js';
 export { CorruptedOrderError } from './corrupted-order.error.js';
+export { TaskImageNotFoundError } from './task-image-not-found.error.js';
+export { InvalidTaskImageError } from './invalid-task-image.error.js';
