@@ -26,7 +26,6 @@ import {
     getRequestBaseUrl,
     HttpRequest,
     mapTaskImageToResponse,
-    mapTaskImageToUrl,
 } from '../mappers/task.mapper.js';
 
 interface UploadedImageFile {
@@ -77,11 +76,11 @@ export class TaskImageController {
     async findImages(
         @Param('taskId', ParseIntPipe) taskId: number,
         @Req() request: HttpRequest,
-    ): Promise<string[]> {
+    ): Promise<TaskImageResponseDTO[]> {
         const images = await this.taskImageList.execute(taskId);
         const baseUrl = getRequestBaseUrl(request);
 
-        return images.map((image) => mapTaskImageToUrl(baseUrl, taskId, image.id));
+        return images.map((image) => mapTaskImageToResponse(baseUrl, taskId, image.id));
     }
 
     @Get(':imageId')

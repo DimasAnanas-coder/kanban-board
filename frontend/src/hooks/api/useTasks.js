@@ -1,4 +1,4 @@
-import TaskService from '../../api/services/TaskServise';
+import TaskService from '../../api/services/TaskService';
 import { useApi } from './useApi';
 
 

@@ -1,25 +1,25 @@
 import Button from './Button';
 
 export default function ImagePreview({
-    imageUrl,
+    image,
     onRemove,
 }) {
     return (
         <div className="relative aspect-square">
             <a
-                href={imageUrl}
+                href={image.url}
                 target="_blank"
                 rel="noopener noreferrer"
             >
                 <img
-                    src={imageUrl}
+                    src={image.url}
                     alt="Task"
                     className="object-cover rounded w-full h-full"
                 />
             </a>
 
             <Button
-                onClick={() => onRemove(imageUrl)}
+                onClick={() => onRemove(image)}
                 className="absolute top-0 right-0 px-1.5 py-0 bg-black/80 hover:bg-black/70 rounded-xl text-white"
             > × </Button>
         </div>

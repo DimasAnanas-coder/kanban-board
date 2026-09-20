@@ -113,8 +113,7 @@ export function useBoardDnd(tasks, handleMoveTask, setTasks) {
         );
         try {
             await handleMoveTask(activeTaskId, targetColumnId, beforeTaskId, afterTaskId);
-        } catch(err) {
-            console.log(tasksSnapshot.current);
+        } catch {
             setTasks(tasksSnapshot.current);
         }
         

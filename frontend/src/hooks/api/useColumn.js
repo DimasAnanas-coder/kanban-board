@@ -1,4 +1,4 @@
-import ColumnService from '../../api/services/ColumnServise';
+import ColumnService from '../../api/services/ColumnService';
 import { useApi } from './useApi';
 
 

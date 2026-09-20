@@ -28,12 +28,8 @@ export default class ImageService {
         return response.data;
     }
 
-    async delete(taskId, imageUrl) {
-        const response = await apiClient.delete(`${this.endpoint}/${taskId}/images/${this.getImageId(imageUrl)}`);
+    async delete(taskId, imageId) {
+        const response = await apiClient.delete(`${this.endpoint}/${taskId}/images/${imageId}`);
         return response.data;
-    }
-
-    getImageId(imageUrl) {
-        return imageUrl.split('/').pop();
     }
 }

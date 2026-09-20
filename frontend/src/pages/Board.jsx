@@ -14,15 +14,12 @@ import TaskModals from '../components/TaskModals';
 export default function Board() {
     const {
         tasks,
-        error,
         createTask,
         updateTask,
         deleteTask,
         moveTask,
         setTasks,
     } = useTasks();
-
-    console.log(error);
 
     const {
         modal,

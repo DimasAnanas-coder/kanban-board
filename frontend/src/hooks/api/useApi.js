@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 
 export function useApi(
@@ -17,34 +17,42 @@ export function useApi(
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const dependeciesForCallback = [...dependencies, onSuccess, onError];
+    const apiFunctionRef = useRef(apiFunction);
+    const onSuccessRef = useRef(onSuccess);
+    const onErrorRef = useRef(onError);
+
+    useEffect(() => {
+        apiFunctionRef.current = apiFunction;
+        onSuccessRef.current = onSuccess;
+        onErrorRef.current = onError;
+    }, [apiFunction, onSuccess, onError]);
 
     const execute = useCallback(async(...apiArgs) => {
         setLoading(true);
         setError(null);
         try {
-            const result = await apiFunction(...apiArgs);
+            const result = await apiFunctionRef.current(...apiArgs);
             setData(result);
-            if (onSuccess) {
-                onSuccess(result);
+            if (onSuccessRef.current) {
+                onSuccessRef.current(result);
             }
             return result;
         } catch (error) {
             setError(error);
-            if (onError) {
-                onError(error);
+            if (onErrorRef.current) {
+                onErrorRef.current(error);
             }
             throw error;
         } finally {
             setLoading(false);
         }
-    }, dependeciesForCallback);
+    }, []);
 
     useEffect(() => {
         if (immediate) {
             execute(...args);
         }
-    }, dependeciesForCallback);
+    }, [immediate, execute, ...dependencies, ...args]);
 
     return {
         data,

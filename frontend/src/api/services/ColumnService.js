@@ -1,4 +1,4 @@
-import BaseService from './BaseServise';
+import BaseService from './BaseService';
 
 
 export default class ColumnService extends BaseService {

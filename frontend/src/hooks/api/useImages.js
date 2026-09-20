@@ -1,4 +1,4 @@
-import ImageService from '../../api/services/ImageServise';
+import ImageService from '../../api/services/ImageService';
 import { useApi } from './useApi';
 
 const imageService = new ImageService();
@@ -33,19 +33,19 @@ export function useImages(taskId) {
         loading: deleteLoading,
         error: deleteError,
     } = useApi(
-        (imageUrl) => imageService.delete(taskId, imageUrl),
+        (imageId) => imageService.delete(taskId, imageId),
         { immediate: false },
     );
 
     const createImage = async(file) => {
         const createdImage = await createImageRequest(file);
-        setImages(prevImages => [...prevImages, createdImage.url]);
+        setImages(prevImages => [...prevImages, createdImage]);
         return createdImage;
     };
 
-    const deleteImage = async(imageUrl) => {
-        await deleteImageRequest(imageUrl);
-        setImages(prevImages => prevImages.filter(image => image !== imageUrl));
+    const deleteImage = async(image) => {
+        await deleteImageRequest(image.id);
+        setImages(prevImages => prevImages.filter(prevImage => prevImage.id !== image.id));
     };
 
     return {

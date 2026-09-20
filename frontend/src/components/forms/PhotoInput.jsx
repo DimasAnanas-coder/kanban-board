@@ -40,7 +40,7 @@ export default function PhotoInput({
                 {images.length > 0 && images.map((img) => (
                     <ImagePreview
                         key={img.id}
-                        imageUrl={img}
+                        image={img}
                         onRemove={handleRemoveImage}
                     />
                 ))}
