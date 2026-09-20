@@ -2,11 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { Prisma, TaskImage as PrismaTaskImage } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 
-import { DatabaseError } from '../../application/errors/index.js';
 import { TaskImageRepository } from '../../application/ports/task-image.repository.js';
 import { CreateTaskImageCommand, TaskImageData } from '../../application/types/task-image.data.js';
 
 import { PrismaRepository } from './prisma.repository.js';
+
+import { DatabaseError } from '#core/application/errors/database.error.js';
 
 @Injectable()
 export class PrismaTaskImageRepository extends PrismaRepository implements TaskImageRepository {

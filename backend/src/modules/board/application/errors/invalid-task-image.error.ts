@@ -1,4 +1,4 @@
-import { ApplicationError } from './application.error.js';
+import { ApplicationError } from '#core/application/errors/application.error.js';
 
 export class InvalidTaskImageError extends ApplicationError {
     constructor() {

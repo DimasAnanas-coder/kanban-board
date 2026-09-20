@@ -1,6 +1,3 @@
-export { ApplicationError } from './application.error.js';
-export { DatabaseError } from './database.error.js';
-
 export { ColumnNotFoundError } from './column-not-found.error.js';
 export { ColumnCapacityExceededError } from './column-capacity-exceeded.error copy.js';
 export { EmptyColumnUpdateError } from './empty-column-update.error.js';

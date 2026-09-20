@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { APP_FILTER } from '@nestjs/core';
 
 import { COLUMN_REPOSITORY } from './application/ports/column.repository.js';
 import { TASK_IMAGE_REPOSITORY } from './application/ports/task-image.repository.js';
@@ -28,9 +27,8 @@ import { PrismaTaskImageRepository } from './infrastructure/prisma/prisma-task-i
 import { PrismaTaskRepository } from './infrastructure/prisma/prisma-task.repository.js';
 import { PrismaUnitOfWork } from './infrastructure/prisma/prisma-unit-of-work.js';
 import { ColumnController } from './presentation/rest/controllers/column.controller.js';
-import { TaskController } from './presentation/rest/controllers/task.controller.js';
 import { TaskImageController } from './presentation/rest/controllers/task-image.controller.js';
-import { ApplicationErrorFilter } from './presentation/rest/filters/application-error.filter.js';
+import { TaskController } from './presentation/rest/controllers/task.controller.js';
 
 @Module({
     imports: [],
@@ -71,11 +69,6 @@ import { ApplicationErrorFilter } from './presentation/rest/filters/application-
         {
             provide: UNIT_OF_WORK,
             useClass: PrismaUnitOfWork,
-        },
-
-        {
-            provide: APP_FILTER,
-            useClass: ApplicationErrorFilter,
         },
     ],
 })

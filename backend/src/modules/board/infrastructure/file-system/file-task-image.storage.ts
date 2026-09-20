@@ -3,9 +3,10 @@ import { basename, join } from 'node:path';
 
 import { Injectable } from '@nestjs/common';
 
-import { DatabaseError } from '../../application/errors/index.js';
 import { TaskImageStorage } from '../../application/ports/task-image.storage.js';
 import { TaskImageFileData } from '../../application/types/task-image.data.js';
+
+import { DatabaseError } from '#core/application/errors/database.error.js';
 
 @Injectable()
 export class FileTaskImageStorage implements TaskImageStorage {

@@ -2,11 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma, Task as PrismaTask } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 
-import { 
-    ColumnNotFoundError,
-    DatabaseError,
-    TaskNotFoundError 
-} from '../../application/errors/index.js';
+import { ColumnNotFoundError, TaskNotFoundError } from '../../application/errors/index.js';
 import { TaskRepository } from '../../application/ports/task.repository.js';
 import {
     TaskData,
@@ -14,8 +10,10 @@ import {
     CreateTaskRepositoryCommand,
     MoveTaskRepositoryCommand,
 } from '../../application/types/task.data.js';
+
 import { PrismaRepository } from './prisma.repository.js';
 
+import { DatabaseError } from '#core/application/errors/database.error.js';
 
 @Injectable()
 export class PrismaTaskRepository extends PrismaRepository implements TaskRepository {
@@ -59,8 +57,8 @@ export class PrismaTaskRepository extends PrismaRepository implements TaskReposi
                 id: command.id,
             },
             data: {
-                ...(command.title != undefined && { title: command.title }),
-                ...(command.description != undefined && { description: command.description }),
+                ...(command.title !== undefined && { title: command.title }),
+                ...(command.description !== undefined && { description: command.description }),
             },
         });
 
@@ -71,9 +69,9 @@ export class PrismaTaskRepository extends PrismaRepository implements TaskReposi
         try {
             const task = await this.service.task.update({
                 where: { id: command.id },
-                data: { 
+                data: {
                     columnId: command.columnId,
-                    orderId: command.orderId 
+                    orderId: command.orderId,
                 },
             });
 
@@ -118,14 +116,13 @@ export class PrismaTaskRepository extends PrismaRepository implements TaskReposi
     async getMinOrderTask(columnId: number): Promise<TaskData | null> {
         return this.service.task.findFirst({
             where: {
-                columnId: columnId
+                columnId: columnId,
             },
             orderBy: {
-                orderId: 'asc'
-            }
+                orderId: 'asc',
+            },
         });
     }
-
 
     private toTaskData(task: PrismaTask): TaskData {
         return {
