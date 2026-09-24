@@ -8,11 +8,14 @@ import { AppService } from './app.service.js';
 import { BoardModule } from './modules/board/board.module.js';
 
 import { ApplicationErrorFilter } from '#core/presentation/rest/filters/application-error.filter.js';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 
 @Module({
     imports: [
+        PrometheusModule.register({
+            path: '/metrics',
+        }),
         ConfigModule.forRoot({
-            // isGlobal: true — делает ConfigService доступным без импорта в другие модули
             isGlobal: true,
             envFilePath: '.env',
         }),
