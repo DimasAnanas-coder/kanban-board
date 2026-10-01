@@ -20,33 +20,30 @@ export class MetricsInterceptor implements NestInterceptor {
         const request = context.switchToHttp().getRequest();
         const response = context.switchToHttp().getResponse();
 
-        // Не считаем сам /metrics, иначе будет шум и рекурсия
         if (request.url === '/metrics') {
             return next.handle();
         }
 
         const method = request.method;
-        // ВАЖНО: route.path, а не url — иначе взрыв кардинальности
         const route = request.route?.path || request.url;
 
         this.inProgressGauge.inc({ method });
         const endTimer = this.requestDuration.startTimer({ method, route });
 
-        return next.handle().pipe(
-            tap({
-                next: () => {
-                    const status = String(response.statusCode);
-                    this.requestCounter.inc({ method, route, status });
-                    this.inProgressGauge.dec({ method });
-                    endTimer({ status });
-                },
-                error: (error) => {
-                    const status = String(error.status || 500);
-                    this.requestCounter.inc({ method, route, status });
-                    this.inProgressGauge.dec({ method });
-                    endTimer({ status });
-                },
-            }),
-        );
+        let recorded = false;
+        const record = () => {
+            if (recorded) return;
+            recorded = true;
+            
+            const status = String(response.statusCode);
+            this.requestCounter.inc({ method, route, status });
+            this.inProgressGauge.dec({ method });
+            endTimer({ status });
+        };
+
+        response.once('finish', record);
+        response.once('close', record);
+
+        return next.handle();
     }
 }
